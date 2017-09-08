@@ -23,4 +23,18 @@
 	    on u.id=m.uid
 	</select>
 
+	<select id="selectByUserNameWithMsg" resultMap="UserWithMsgResultMap">
+		select u.*,m.*
+	    from dq1401 u left join message m
+	    on u.id=m.uid
+	    where u.username=#{username}
+	</select>
+
+	<select id="selectByIdWithMsg" resultMap="UserWithMsgResultMap">
+		select u.*,m.*
+	    from dq1401 u left join message m
+	    on u.id=m.uid
+	    where u.id=#{id}
+	</select>
+
 </mapper>

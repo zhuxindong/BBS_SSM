@@ -13,11 +13,12 @@ import com.zxd.bbs.pojo.User;
 public interface UserMapper {
 	
 	/**
-	 * 有条件的查询用户，同时查询用户的帖子和打分情况
+	 * 查询所有用户，同时查询用户的帖子和打分情况
 	 * @param user
 	 * @return
 	 */
 	List<User> selectAllWithMsg();
 	
+	List<User> selectByUserNameWithMsg(String username);
 	
 }

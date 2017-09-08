@@ -27,6 +27,7 @@ public class TestUserMapper {
 	@Autowired
 	SqlSession sqlSession;
 	
+	
 	@Test
 	public void testSelectAll(){
 		
@@ -40,11 +41,25 @@ public class TestUserMapper {
 				System.out.println(message.getContent()+" -- "+message.getCreatetime());
 			}
 		}
-		
-		
-		
+	
 	}
 	
+	
+	@Test
+	public void testSelectByUserName(){
+		
+		UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+		List<User> users = mapper.selectByUserNameWithMsg("201403080433");
+		
+		for (User user : users) {
+			List<Message> messages = user.getMessages();
+			System.out.println(user.getName()+"----->:");
+			for (Message message : messages) {
+				System.out.println(message.getContent()+" -- "+message.getCreatetime());
+			}
+		}
+		
+	}
 	
 	
 	
