@@ -37,4 +37,71 @@
 	    where u.id=#{id}
 	</select>
 
+	<insert id="insertSelective" parameterType="com.zxd.bbs.pojo.User">
+	    insert into dq1401
+	    <trim prefix="(" suffix=")" suffixOverrides=",">
+	      <if test="id != null">
+	        id,
+	      </if>
+	      <if test="username != null">
+	        username,
+	      </if>
+	      <if test="password != null">
+	        password,
+	      </if>
+	      <if test="name != null">
+	        name,
+	      </if>
+	      <if test="sex != null">
+	        sex,
+	      </if>
+	      <if test="description != null">
+	        description,
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides=",">
+	      <if test="id != null">
+	        #{id,jdbcType=INTEGER},
+	      </if>
+	      <if test="username != null">
+	        #{username,jdbcType=VARCHAR},
+	      </if>
+	      <if test="password != null">
+	        #{password,jdbcType=VARCHAR},
+	      </if>
+	      <if test="name != null">
+	        #{name,jdbcType=VARCHAR},
+	      </if>
+	      <if test="sex != null">
+	        #{sex,jdbcType=VARCHAR},
+	      </if>
+	      <if test="description != null">
+	        #{description,jdbcType=VARCHAR},
+	      </if>
+	    </trim>
+	  </insert>
+	
+	<update id="updateByUserNameSelective" parameterType="map">
+		update dq1401
+		<set>
+		      <if test="username != null">
+		        username=#{username,jdbcType=VARCHAR},
+		      </if>
+		      <if test="password != null">
+		        password=#{password,jdbcType=VARCHAR},
+		      </if>
+		      <if test="name != null">
+		        name=#{name,jdbcType=VARCHAR},
+		      </if>
+		      <if test="sex != null">
+		        sex=#{sex,jdbcType=VARCHAR},
+		      </if>
+		      <if test="description != null">
+		        description=#{description,jdbcType=VARCHAR},
+		      </if>
+		</set>
+		where username=#{username}
+	</update>
+	
+	
 </mapper>

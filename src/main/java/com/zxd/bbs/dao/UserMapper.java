@@ -21,4 +21,10 @@ public interface UserMapper {
 	
 	List<User> selectByUserNameWithMsg(String username);
 	
+	List<User> selectByIdWithMsg(long id);
+	
+	int insertSelective(User user);
+	
+	int updateByUserNameSelective(User user);
+	
 }

@@ -25,13 +25,13 @@ public class TestUserMapper {
 	
 	
 	@Autowired
-	SqlSession sqlSession;
+	UserMapper mapper;
 	
 	
 	@Test
 	public void testSelectAll(){
 		
-		UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+
 		List<User> users = mapper.selectAllWithMsg();
 		
 		for (User user : users) {
@@ -48,8 +48,8 @@ public class TestUserMapper {
 	@Test
 	public void testSelectByUserName(){
 		
-		UserMapper mapper = sqlSession.getMapper(UserMapper.class);
-		List<User> users = mapper.selectByUserNameWithMsg("201403080433");
+
+		List<User> users = mapper.selectByUserNameWithMsg("2014030804332");
 		
 		for (User user : users) {
 			List<Message> messages = user.getMessages();
@@ -61,8 +61,35 @@ public class TestUserMapper {
 		
 	}
 	
+	@Test
+	public void testInsertSelective(){
+		
+		User user = new User();
+		
+		user.setUsername("admin");
+		user.setPassword("admin");
+		user.setName("admin");
+		user.setSex("ÄÐ");
+		
+		int rows = mapper.insertSelective(user);
+		
+		System.out.println(rows);
+		
+		
+	}
 	
 	
+	@Test
+	public void testUpdateByUserNameSelective(){
+		
+		User user = new User();
+		user.setUsername("201403080433");
+		user.setPassword("123456");
+		
+		int rows = mapper.updateByUserNameSelective(user);
+		
+		System.out.println(rows);
+	}
 	
 
 }
