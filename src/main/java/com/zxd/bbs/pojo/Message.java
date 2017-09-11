@@ -14,7 +14,7 @@ import java.util.List;
 
 public class Message {
 
-	private long id;
+	private Integer id;
 	private String content;
 	private Timestamp createtime;
 	
@@ -25,7 +25,7 @@ public class Message {
 		
 	}
 
-	public Message(long id, String content, Timestamp createtime, User user, List<Reply> replies) {
+	public Message(Integer id, String content, Timestamp createtime, User user, List<Reply> replies) {
 		super();
 		this.id = id;
 		this.content = content;
@@ -34,11 +34,11 @@ public class Message {
 		this.replies = replies;
 	}
 
-	public long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

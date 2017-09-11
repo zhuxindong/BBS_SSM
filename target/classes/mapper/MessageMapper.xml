@@ -8,9 +8,9 @@
 		<result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
 		
 		<association javaType="com.zxd.bbs.pojo.User" property="user">
-	    	<id column="id" property="id"/>
-	    	<result column="username" property="username"/>
-	    	<result column="name" property="name"/>
+	    	<id column="muid" property="id"/>
+	    	<result column="musername" property="username"/>
+	    	<result column="mname" property="name"/>
 	    </association>
 	    
 	    <collection property="replies" ofType="com.zxd.bbs.pojo.Reply">
@@ -27,24 +27,26 @@
 	</resultMap>
 	
 	<select id="selectAllWithUserAndReply" resultMap="MessageWithUserAndReplyResultMap">
-		select m.*,u.*,r.*,d.*,
-		r.id 'rid',r.content 'rcontent',r.createtime 'rcreatetime',
-		d.id 'ruid',d.username 'rusername',d.name 'rname'
-     		from message m left join dq1401 u
-     		on u.id = m.uid
-        		left join (reply r left join dq1401 d on d.id=r.uid)
-        		on m.id=r.mid;
-	</select>
-	
-	<select id="selectByUserNameWithUserAndReply" resultMap="MessageWithUserAndReplyResultMap">
-		select m.*,u.*,r.*,d.*,
+		select m.*,
+		u.id 'muid',u.username 'musername',u.name 'mname',
 		r.id 'rid',r.content 'rcontent',r.createtime 'rcreatetime',
 		d.id 'ruid',d.username 'rusername',d.name 'rname'
      		from message m left join dq1401 u
      		on u.id = m.uid
         		left join (reply r left join dq1401 d on d.id=r.uid)
         		on m.id=r.mid
-        			where u.username=#{username};
+	</select>
+	
+	<select id="selectByUserNameWithUserAndReply" resultMap="MessageWithUserAndReplyResultMap">
+		select m.*,
+		u.id 'muid',u.username 'musername',u.name 'mname',
+		r.id 'rid',r.content 'rcontent',r.createtime 'rcreatetime',
+		d.id 'ruid',d.username 'rusername',d.name 'rname'
+     		from message m left join dq1401 u
+     		on u.id = m.uid
+        		left join (reply r left join dq1401 d on d.id=r.uid)
+        		on m.id=r.mid
+        			where u.username=#{username}
 	</select>
 
 	<insert id="insert" parameterType="com.zxd.bbs.pojo.Message">

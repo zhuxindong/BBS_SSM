@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.github.pagehelper.PageHelper;
 import com.zxd.bbs.dao.MessageMapper;
 import com.zxd.bbs.dao.UserMapper;
 import com.zxd.bbs.pojo.Message;
@@ -35,7 +36,7 @@ public class TestMessageMapper {
 	
 	@Test
 	public void testSelectAllWithUserAndReply(){
-		
+		PageHelper.startPage(1, 10);
 		List<Message> messages = messageMapper.selectAllWithUserAndReply();
 		
 		for (Message message : messages) {
@@ -52,7 +53,7 @@ public class TestMessageMapper {
 	
 	@Test
 	public void testSelectByUserNameWithUserAndReply(){
-		
+		PageHelper.startPage(1, 10);
 		List<Message> messages = messageMapper.selectByUserNameWithUserAndReply("201403080433");
 		
 		for (Message message : messages) {

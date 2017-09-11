@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 
 public class Reply {
 
-	private long id;
+	private Integer id;
 	private String content;
 	private Timestamp createtime;
 	
@@ -21,7 +21,7 @@ public class Reply {
 		
 	}
 
-	public Reply(long id, String content, Timestamp createtime, User user, Message message) {
+	public Reply(Integer id, String content, Timestamp createtime, User user, Message message) {
 		super();
 		this.id = id;
 		this.content = content;
@@ -30,11 +30,11 @@ public class Reply {
 		this.message = message;
 	}
 
-	public long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

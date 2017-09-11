@@ -10,7 +10,7 @@ import java.util.List;
 
 public class User {
 
-	private long id;
+	private Integer id;
 	private String username;
 	private String password;
 	private String name;
@@ -24,7 +24,7 @@ public class User {
 	
 	}
 
-	public User(long id, String username, String password, String name, String sex, String description,
+	public User(Integer id, String username, String password, String name, String sex, String description,
 			List<Message> messages, Score score) {
 		super();
 		this.id = id;
@@ -37,11 +37,11 @@ public class User {
 		this.score = score;
 	}
 
-	public long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zxd.bbs.dao.ReplyMapper">
+	
+	
+	<insert id="insert">
+		insert into reply(uid,mid,content,createtime)
+		values(#{user.id},#{message.id},#{content},#{createtime})	
+	</insert>
+	
+	
+	<delete id="deleteById">
+		delete from message 
+		where id=#{id,jdbcType=INTEGER}
+	</delete>
+	
+	
+
+</mapper>

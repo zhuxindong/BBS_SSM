@@ -22,6 +22,11 @@ public interface MessageMapper {
 	
 	int insert(Message message);
 	
+	/**
+	 * 根据帖子的id删除帖子
+	 * @param id
+	 * @return
+	 */
 	int deleteById(long id);
 	
 	
