@@ -28,6 +28,11 @@ public class MessageController {
 	private MessageService messageService;
 	
 	
+	/**
+	 * 分页查询帖子信息，同时查询出帖子对应的回复列表，返回json数据
+	 * @param pn
+	 * @return
+	 */
 	@RequestMapping("/messages")
 	@ResponseBody
 	public Msg getMessagesWithJosn(@RequestParam(value="pn",defaultValue="1") Integer pn){
