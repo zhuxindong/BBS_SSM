@@ -1,0 +1,32 @@
+
+@charset:utf8;
+
+/*背景图片样式*/
+#bgp{
+  	margin-top: 70px;
+  	width: 100%;
+	height: 650px;
+
+
+  	background-repeat:no-repeat;
+	
+	background-position:center top;
+	
+	background-attachment:scroll;
+	
+	background-image: url(../img/background.jpg);
+
+  }
+
+
+
+ /*修改密码按钮的样式*/
+ #chgpassword{
+	margin-top: 10%;
+	margin-bottom: 5%;
+ }
+
+ #logout{
+	margin-top: 10%;
+	margin-bottom: 5%;
+ }
