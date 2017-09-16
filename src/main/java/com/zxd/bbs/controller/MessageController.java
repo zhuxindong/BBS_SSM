@@ -43,6 +43,9 @@ public class MessageController {
 		PageHelper.startPage(pn, 10);
 		List<Message> messages = messageService.getAll();
 		
+		/**
+		 * 封装成pageinfo对象
+		 */
 		PageInfo page = new PageInfo(messages);		
 		return Msg.success().add("pageinfo", page);
 		

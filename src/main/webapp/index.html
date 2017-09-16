@@ -101,12 +101,12 @@
 				</div>
 
 				<!-- 分页导航条和分页信息 -->
-				<div id="pagination-info" style="margin-top: 5%">
+				<div id="page_nav_area" style="margin-top: 5%">
 
 					
 
-					<nav aria-label="Page navigation">
-					  <ul class="pagination" id="pagination_ul">
+					<!-- <nav aria-label="Page navigation">
+					  <ul class="pagination" id="app-pagination">
 						<li><span>第  <span style="color: #0A0A0A ">1</span>  /  <span style="color: #F80606">2</span>  页</span></li>
 					  	<li  id="nav_first"><a href="#">首页</a></li>
 					    <li  id="nav_go_pre">
@@ -114,7 +114,7 @@
 					        <span aria-hidden="true">&laquo;</span>
 					      </a>
 					    </li>
-					    <li id="nav_1"><a href="#">#</a></li>
+					    <li id="nav_1" v-for="p in vue_pag"><a href="#">{{p}}</a></li>
 					    <li id="nav_2"><a href="#">#</a></li>
 					    <li id="nav_3"><a href="#">#</a></li>
 					    <li id="nav_4"><a href="#">#</a></li>
@@ -126,7 +126,7 @@
 					    </li>
 					    <li  id="nav_last"><a href="#">末页</a></li> 
 					  </ul>
-					</nav>
+					</nav> -->
 					
 					
 
@@ -138,7 +138,7 @@
 					
 					<div class="panel panel-default" v-for="m in vue_msg">
 						<!-- 帖子主人、发表时间等信息 -->
-					  	<div class="panel-heading">
+					  	<div class="panel-heading" id="msg_{{m.id}}">
 							{{m.user.name}}
 							<font style="float: right;">发表于：{{m.createtime}}</font>
 					  	</div>

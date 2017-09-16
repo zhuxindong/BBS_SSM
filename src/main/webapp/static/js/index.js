@@ -21,26 +21,110 @@ function to_page(argument) {
 		data: {'pn': argument},
 		success:function(result){
 
-			var vm_messages = new Vue({
+			//构建分页条
+			build_page_nav(result);
 
-			el: "#app-messages",
-			data:{
-				'vue_msg':result.extend.pageinfo.list,
-			}
 
-			})
+
+			//更新vue的数组
+			vm_messages.vue_msg=result.extend.pageinfo.list;
+			
+
+			
+
+
 		}
 	});	
 }
 
 
 
-// 用vue渲染列表，并绑定数据
-// var vm_messages = new Vue({
 
-// 	el: "#app-messages",
-// 	data:{
-// 		'vue_msg':messages.extend.pageinfo.list
-// 	}
 
-// })
+
+
+// 构建分页条信息
+function build_page_nav(argument) {
+	// 清空原来的区域
+	$('#page_nav_area').empty();
+
+	// 根节点
+	var page_ul = $('<ul></ul>').addClass('pagination');
+
+	// 首页
+	var firstPage_li = $('<li></li>').append($('<a></a>').append('首页').attr('href','#'));
+	firstPage_li.click(function(event) {
+		/* Act on the event */
+		to_page(1);
+	});
+
+
+	// 尾页
+	var lastPage_li = $('<li></li>').append($('<a></a>').append('末页').attr('href','#'));
+	lastPage_li.click(function(event) {
+		/* Act on the event */
+		to_page(argument.extend.pageinfo.pages);
+	});
+
+
+
+	// 是否有前一页
+	if (argument.extend.pageinfo.hasPreviousPage == true) {
+		var prePage_li = $('<li></li>').append($('<a></a>').append('&laquo;').attr('href','#'));
+
+		prePage_li.click(function(event) {
+			/* Act on the event */
+			to_page(argument.extend.pageinfo.pageNum-1);
+		});
+
+	}
+	
+	// 是否有后一页
+	if (argument.extend.pageinfo.hasNextPage == true) {
+		var nextPage_li = $('<li></li>').append($('<a></a>').append('&raquo;').attr('href','#'));
+
+		nextPage_li.click(function(event) {
+			/* Act on the event */
+			to_page(argument.extend.pageinfo.pageNum+1);
+		});
+
+	}
+	
+
+	page_ul.append(firstPage_li).append(prePage_li);
+
+
+	// 循环构建分页按钮信息
+	$.each(argument.extend.pageinfo.navigatepageNums, function(index, val) {
+		 /* iterate through array or object */
+		 var num_li = $('<li></li>').append($('<a></a>').append(val).attr('href','#'));
+
+		 // 判断是否为当前页
+		 if (argument.extend.pageinfo.pageNum == val) {num_li.addClass('active');}
+		 // 绑定点击事件
+		 num_li.click(function(event) {
+		 	/* Act on the event */
+		 	to_page(val);
+		 });
+
+		 page_ul.append(num_li);
+
+	});
+
+	page_ul.append(nextPage_li).append(lastPage_li);
+
+	var page_nav = $('<nav></nav>').append(page_ul);
+
+	page_nav.appendTo('#page_nav_area');
+
+}
+
+
+// 渲染帖子信息的vue组件
+var vm_messages = new Vue({
+
+	el: "#app-messages",
+	data:{
+		'vue_msg':[{"id":1,"content":"test","createtime":"2017-05-15 15:00:56","user":{"id":37,"username":"201403080433 ","password":null,"name":"朱鑫栋","sex":null,"description":null,"messages":null,"score":null},"replies":[]}]
+	}
+	})
