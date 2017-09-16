@@ -30,3 +30,20 @@
 	margin-top: 10%;
 	margin-bottom: 5%;
  }
+
+
+
+
+.msg_list-item {
+  transition: all 1s;
+  display: inline-block;
+  margin-right: 10px;
+}
+.msg_list-enter, .msg_list-leave-to
+/* .msg_list-leave-active for below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.msg_list-leave-active {
+  position: absolute;
+}

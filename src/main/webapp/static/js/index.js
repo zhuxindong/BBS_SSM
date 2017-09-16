@@ -125,6 +125,6 @@ var vm_messages = new Vue({
 
 	el: "#app-messages",
 	data:{
-		'vue_msg':[{"id":1,"content":"test","createtime":"2017-05-15 15:00:56","user":{"id":37,"username":"201403080433 ","password":null,"name":"朱鑫栋","sex":null,"description":null,"messages":null,"score":null},"replies":[]}]
+		'vue_msg':[]
 	}
 	})

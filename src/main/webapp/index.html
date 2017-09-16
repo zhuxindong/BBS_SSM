@@ -136,23 +136,24 @@
 				<!-- 帖子信息 -->
 				<div id="app-messages">
 					
-					<div class="panel panel-default" v-for="m in vue_msg">
-						<!-- 帖子主人、发表时间等信息 -->
-					  	<div class="panel-heading" id="msg_{{m.id}}">
-							{{m.user.name}}
-							<font style="float: right;">发表于：{{m.createtime}}</font>
-					  	</div>
-	
-						<!-- 帖子内容 -->
-						<div class="panel-body">
-						    {{m.content}}
+					
+						<div class="panel panel-default" v-for="m in vue_msg" v-bind:id="'msg_'+m.id">
+							<!-- 帖子主人、发表时间等信息 -->
+						  	<div class="panel-heading">
+								{{m.user.name}}
+								<font style="float: right;">发表于：{{m.createtime}}</font>
+						  	</div>
+		
+							<!-- 帖子内容 -->
+							<div class="panel-body">
+							    {{m.content}}
+							</div>
+
+							
+
+
 						</div>
-
-						
-
-
-					</div>
-	
+					
 				</div>
 
 
