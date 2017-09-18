@@ -20,6 +20,8 @@ public interface MessageMapper {
 	
 	List<Message> selectByUserNameWithUserAndReply(String username);
 	
+	List<Message> selectByIdWithUserAndReply(int id);
+	
 	int insert(Message message);
 	
 	/**
@@ -27,7 +29,7 @@ public interface MessageMapper {
 	 * @param id
 	 * @return
 	 */
-	int deleteById(long id);
+	int deleteById(int id);
 	
 	
 
