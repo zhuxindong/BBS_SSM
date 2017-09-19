@@ -48,6 +48,25 @@
         		on m.id=r.mid
         			where u.username=#{username}
 	</select>
+	
+	
+	<select id="selectByIdWithUserAndReply" resultMap="MessageWithUserAndReplyResultMap">
+		select m.*,
+		u.id 'muid',u.username 'musername',u.name 'mname',
+		r.id 'rid',r.content 'rcontent',r.createtime 'rcreatetime',
+		d.id 'ruid',d.username 'rusername',d.name 'rname'
+     		from message m left join dq1401 u
+     		on u.id = m.uid
+        		left join (reply r left join dq1401 d on d.id=r.uid)
+        		on m.id=r.mid
+        			where m.id=#{id}		
+	</select>
+	
+	
+	
+	
+	
+	
 
 	<insert id="insert" parameterType="com.zxd.bbs.pojo.Message">
 		insert into message(uid,content,createtime)
