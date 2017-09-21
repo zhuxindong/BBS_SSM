@@ -52,5 +52,10 @@ public class MessageController {
 	}
 	
 	
+	
+	public Msg deleteMessageWithReplyById(int id) {
+		
+		return null;
+	}
 
 }
