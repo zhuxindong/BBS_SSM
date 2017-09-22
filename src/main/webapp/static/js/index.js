@@ -26,8 +26,8 @@ function to_page(argument) {
 
 
 
-			//更新vue的数组
-			vm_messages.vue_msg=result.extend.pageinfo.list;
+			//渲染帖子列表
+			build_message_list(result);
 			
 
 			
@@ -120,11 +120,52 @@ function build_page_nav(argument) {
 }
 
 
-// 渲染帖子信息的vue组件
-var vm_messages = new Vue({
 
-	el: "#app-messages",
-	data:{
-		'vue_msg':[]
-	}
-	})
+
+// 渲染帖子信息
+function build_message_list(argument) {
+	// 先清空
+
+	$('#app-messages').empty();
+
+	//获取帖子列表
+	var msg=argument.extend.pageinfo.list;
+
+	// 通过遍历来构建帖子
+	$.each(msg, function(index, val) {
+		 /* iterate through array or object */
+
+		 // 一个帖子的根元素div
+		 var root_div=$('<div style="display: none;"></div>').addClass('panel panel-default').attr('id','msg+'+val.id);
+
+		 //帖子的表头信息
+		 var head_div=$('<div></div>').addClass('panel-heading').append(val.user.name)   //加入帖子主人,下面是加入创建时间
+		 														.append($('<font></font>').append(val.createtime).css({'float':"right",'margin-right':"5px"}));
+
+
+
+         //帖子的内容信息
+         var content_div=$('<div></div>').addClass('panel-body').append(val.content);
+
+
+
+
+
+		 //将构建好的元素加入根元素
+		 root_div.append(head_div).append(content_div);
+
+
+		 // 将根元素加入页面
+		 root_div.appendTo('#app-messages');
+		 root_div.fadeIn(300);
+		 
+		
+
+	});
+
+
+
+
+
+
+}
