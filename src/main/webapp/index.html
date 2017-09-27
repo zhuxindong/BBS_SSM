@@ -7,13 +7,12 @@
 
 	<script type="text/javascript" src="static/js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="static/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="static/js/vue.js"></script>
 	
 	
 
 	<link rel="stylesheet" type="text/css" href="static/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="static/css/style.css">
-
+	
 
 	<title>欢迎光临本论坛</title>
 </head>
@@ -127,36 +126,16 @@
 					    <li  id="nav_last"><a href="#">末页</a></li> 
 					  </ul>
 					</nav> -->
-					
-					
-
 				</div>
 
 				
+
 				<!-- 帖子信息 -->
 				<div id="app-messages">
 					
+
 					
-						<div class="panel panel-default" v-for="m in vue_msg" v-bind:id="'msg_'+m.id" :key=m.id>
-							<!-- 帖子主人、发表时间等信息 -->
-						  	<div class="panel-heading">
-								{{m.user.name}}
-								<font style="float: right;">发表于：{{m.createtime}}</font>
-						  	</div>
-		
-							<!-- 帖子内容 -->
-							<div class="panel-body">
-							    {{m.content}}
-							</div>
-
-							
-							<!-- 评论区 -->
-							<div style="text-align: center;">
-								<span type="text" class="text-muted" style="text-align: center;">--评论区--</span>
-							</div>
-
-
-						</div>
+						
 					
 				</div>
 
