@@ -12,7 +12,7 @@ function getLocalTime(nS) {
 } 
 
 
-// 根据传入的页码号，更新message这个全局变量
+// 根据传入的页码号，分页查询
 function to_page(argument) {
 	// body...
 	$.ajax({
@@ -144,9 +144,19 @@ function build_message_list(argument) {
 
 
 
-         //帖子的内容信息
-         var content_div=$('<div></div>').addClass('panel-body').append(val.content);
 
+
+         // 发表评论的根元素,
+         var reply_div=$('<div style="float: right; margin-top: 10px;"></div>').append($('<button class="btn btn-info" type="button" data-toggle="collapse" aria-expanded="false"'
+         																				+'aria-controls="collapseExample" style="float: right;">'
+         																				+'评论</button>')).attr('data-target','#rep_msg_'+val.id) //加入按钮
+         																		.append($('<div class="collapse" style="float: right; ">'
+         																				+'<div id="reply-page">'
+         																				+'<form action="" method="post"></form> </div></div>')).attr('id','rep_msg_'+val.id);//加入输入框
+
+
+         //帖子的内容信息
+         var content_div=$('<div></div>').addClass('panel-body').append(val.content).append(reply_div);
 
 
 
