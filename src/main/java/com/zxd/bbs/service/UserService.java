@@ -10,7 +10,7 @@ import com.zxd.bbs.pojo.User;
 
 /**
 * @author zhuxindong  E-mail:501801307@qq.com
-* @date ´´½¨Ê±¼ä£º2017Äê9ÔÂ9ÈÕ ÏÂÎç3:06:56
+* @date åˆ›å»ºæ—¶é—´ï¼š2017å¹´9æœˆ9æ—¥ ä¸‹åˆ3:06:56
 * @version 1.0
 */
 
@@ -22,7 +22,7 @@ public class UserService {
 	private UserMapper userMapper;
 	
 	/**
-	 * ²éÑ¯ËùÓĞÓÃ»§
+	 * æŸ¥è¯¢æ‰€æœ‰ç”¨æˆ·
 	 * @return
 	 */
 	public List<User> getAll(){

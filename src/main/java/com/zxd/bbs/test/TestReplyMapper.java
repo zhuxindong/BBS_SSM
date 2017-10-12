@@ -18,7 +18,7 @@ import com.zxd.bbs.pojo.User;
 
 /**
 * @author zhuxindong  E-mail:501801307@qq.com
-* @date ´´½¨Ê±¼ä£º2017Äê9ÔÂ11ÈÕ ÏÂÎç5:33:03
+* @date åˆ›å»ºæ—¶é—´ï¼š2017å¹´9æœˆ11æ—¥ ä¸‹åˆ5:33:03
 * @version 1.0
 */
 
@@ -42,7 +42,7 @@ public class TestReplyMapper {
 		Reply reply = new Reply();
 		Timestamp createtime = new Timestamp(new Date().getTime());
 		
-		reply.setContent("Mybatis ²åÈëµÄ»Ø¸´");
+		reply.setContent("Mybatis æ’å…¥çš„å›å¤");
 		reply.setUser(user);
 		reply.setMessage(message);
 		reply.setCreatetime(createtime);

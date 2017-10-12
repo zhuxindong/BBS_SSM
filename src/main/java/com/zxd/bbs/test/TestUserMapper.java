@@ -15,7 +15,7 @@ import com.zxd.bbs.pojo.User;
 
 /**
 * @author zhuxindong  E-mail:501801307@qq.com
-* @date ´´½¨Ê±¼ä£º2017Äê9ÔÂ8ÈÕ ÏÂÎç3:41:13
+* @date åˆ›å»ºæ—¶é—´ï¼š2017å¹´9æœˆ8æ—¥ ä¸‹åˆ3:41:13
 * @version 1.0
 */
 
@@ -69,7 +69,7 @@ public class TestUserMapper {
 		user.setUsername("admin");
 		user.setPassword("admin");
 		user.setName("admin");
-		user.setSex("ÄĞ");
+		user.setSex("ç”·");
 		
 		int rows = mapper.insertSelective(user);
 		

@@ -16,7 +16,7 @@ import com.zxd.bbs.service.MessageService;
 
 /**
 * @author zhuxindong  E-mail:501801307@qq.com
-* @date ´´½¨Ê±¼ä£º2017Äê9ÔÂ11ÈÕ ÏÂÎç5:52:26
+* @date åˆ›å»ºæ—¶é—´ï¼š2017å¹´9æœˆ11æ—¥ ä¸‹åˆ5:52:26
 * @version 1.0
 */
 
@@ -29,7 +29,7 @@ public class MessageController {
 	
 	
 	/**
-	 * ·ÖÒ³²éÑ¯Ìû×ÓĞÅÏ¢£¬Í¬Ê±²éÑ¯³öÌû×Ó¶ÔÓ¦µÄ»Ø¸´ÁĞ±í£¬·µ»ØjsonÊı¾İ
+	 * åˆ†é¡µæŸ¥è¯¢å¸–å­ä¿¡æ¯ï¼ŒåŒæ—¶æŸ¥è¯¢å‡ºå¸–å­å¯¹åº”çš„å›å¤åˆ—è¡¨ï¼Œè¿”å›jsonæ•°æ®
 	 * @param pn
 	 * @return
 	 */
@@ -38,13 +38,13 @@ public class MessageController {
 	public Msg getMessagesWithJosn(@RequestParam(value="pn",defaultValue="1") Integer pn){
 		
 		/**
-		 * ÀûÓÃpagehelperÀ´·ÖÒ³²éÑ¯
+		 * åˆ©ç”¨pagehelperæ¥åˆ†é¡µæŸ¥è¯¢
 		 */
 		PageHelper.startPage(pn, 10);
 		List<Message> messages = messageService.getAll();
 		
 		/**
-		 * ·â×°³Épageinfo¶ÔÏó
+		 * å°è£…æˆpageinfoå¯¹è±¡
 		 */
 		PageInfo page = new PageInfo(messages);		
 		return Msg.success().add("pageinfo", page);

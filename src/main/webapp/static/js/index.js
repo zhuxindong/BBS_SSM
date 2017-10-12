@@ -136,7 +136,7 @@ function build_message_list(argument) {
 		 /* iterate through array or object */
 
 		 // 一个帖子的根元素div
-		 var root_div=$('<div style="display: none;"></div>').addClass('panel panel-default').attr('id','msg+'+val.id);
+		 var root_div=$('<div style="display: none;"></div>').addClass('panel panel-default').attr('id','msg'+val.id);
 
 		 //帖子的表头信息
 		 var head_div=$('<div></div>').addClass('panel-heading').append(val.user.name)   //加入帖子主人,下面是加入创建时间
@@ -149,11 +149,19 @@ function build_message_list(argument) {
          // 发表评论的根元素,
          var reply_div=$('<div style="float: right; margin-top: 10px;"></div>').append($('<button class="btn btn-info" type="button" data-toggle="collapse" aria-expanded="false"'
          																				+'aria-controls="collapseExample" style="float: right;">'
-         																				+'评论</button>')).attr('data-target','#rep_msg_'+val.id) //加入按钮
-         																		.append($('<div class="collapse" style="float: right; ">'
-         																				+'<div id="reply-page">'
-         																				+'<form action="" method="post"></form> </div></div>')).attr('id','rep_msg_'+val.id);//加入输入框
-
+         																				+'评论</button>').attr('data-target','#rep_msg_'+val.id)); //加入按钮
+																	         	// .append($('<div class="collapse" style="float: right; ">'
+																	         	// +'<div id="reply-page">'
+																	         	// +'<form action="" method="post"></form> </div></div>').attr('id','rep_msg_'+val.id));//加入输入框
+		// 评论输入框的textarea
+		var reply_textarea_div=$('<textarea  class="form-control" style="min-height: 82px;"></textarea>').attr('id','reply_text_'+val.id);										         	
+		// 评论输入框的回复按钮
+		var reply_button_div=$('<button type="button" class="btn">发表</button>').attr('onclick','publishreply('+val.id+')');
+		// 评论输入框的form
+		var reply_form_div=$('<form action="" method="post"></form>').append(reply_textarea_div).append(reply_button_div);
+		var reply_page_div=$('<div id="reply-page"></div>').append(reply_form_div);
+		var reply_hiden_div=$('<div class="collapse" style="float: right; "></div>').append(reply_page_div).attr('id','rep_msg_'+val.id);
+		reply_div.append(reply_hiden_div);
 
          //帖子的内容信息
          var content_div=$('<div></div>').addClass('panel-body').append(val.content).append(reply_div);

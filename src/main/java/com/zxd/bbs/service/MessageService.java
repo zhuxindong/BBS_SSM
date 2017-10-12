@@ -12,7 +12,7 @@ import com.zxd.bbs.pojo.Reply;
 
 /**
 * @author zhuxindong  E-mail:501801307@qq.com
-* @date ´´½¨Ê±¼ä£º2017Äê9ÔÂ11ÈÕ ÏÂÎç5:54:01
+* @date åˆ›å»ºæ—¶é—´ï¼š2017å¹´9æœˆ11æ—¥ ä¸‹åˆ5:54:01
 * @version 1.0
 */
 
@@ -28,7 +28,7 @@ public class MessageService {
 	
 	
 	/**
-	 * ²éÑ¯ËùÓĞÌû×Ó
+	 * æŸ¥è¯¢æ‰€æœ‰å¸–å­
 	 * @return
 	 */
 	public List<Message> getAll(){
@@ -39,23 +39,23 @@ public class MessageService {
 	
 	
 	/**
-	 * ¸ù¾İÌû×ÓµÄidÉ¾³ıÌû×Ó£¬ĞèÒªÏÈÉ¾³ı¸ÃÌû×ÓÏÂµÄËùÓĞ»Ø¸´
+	 * æ ¹æ®å¸–å­çš„idåˆ é™¤å¸–å­ï¼Œéœ€è¦å…ˆåˆ é™¤è¯¥å¸–å­ä¸‹çš„æ‰€æœ‰å›å¤
 	 * @param id
 	 */
 	public void deleteMessageById(int id) {
 		
 		/**
-		 * ÏÈ¸ù¾İÌû×ÓµÄid²éÑ¯µ½¸ÃÌû×Ó
+		 * å…ˆæ ¹æ®å¸–å­çš„idæŸ¥è¯¢åˆ°è¯¥å¸–å­
 		 */
 		Message message = messageMapper.selectByIdWithUserAndReply(id).get(0);
 		
 		/**
-		 * »ñÈ¡¸ÃÌû×ÓÏÂµÄËùÓĞ»Ø¸´
+		 * è·å–è¯¥å¸–å­ä¸‹çš„æ‰€æœ‰å›å¤
 		 */
 		List<Reply> replies = message.getReplies();
 		
 		/**
-		 * ±éÀúÉ¾³ı»Ø¸´
+		 * éå†åˆ é™¤å›å¤
 		 */
 		for (Reply reply : replies) {
 			replyMapper.deleteById(reply.getId());
@@ -63,7 +63,7 @@ public class MessageService {
 		
 		
 		/**
-		 * É¾³ı»Ø¸´Ö®ºóÔÙÉ¾³ıÌû×Ó
+		 * åˆ é™¤å›å¤ä¹‹åå†åˆ é™¤å¸–å­
 		 */
 		messageMapper.deleteById(id);				
 		

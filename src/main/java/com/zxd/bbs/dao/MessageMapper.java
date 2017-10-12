@@ -6,14 +6,14 @@ import com.zxd.bbs.pojo.Message;
 
 /**
 * @author zhuxindong  E-mail:501801307@qq.com
-* @date ´´½¨Ê±¼ä£º2017Äê9ÔÂ9ÈÕ ÉÏÎç9:01:48
+* @date åˆ›å»ºæ—¶é—´ï¼š2017å¹´9æœˆ9æ—¥ ä¸Šåˆ9:01:48
 * @version 1.0
 */
 
 public interface MessageMapper {
 	
 	/**
-	 * ²éÑ¯ËùÓĞÌû×Ó£¬Í¬Ê±²éÑ¯Ìû×ÓµÄÖ÷ÈËºÍ»Ø¸´
+	 * æŸ¥è¯¢æ‰€æœ‰å¸–å­ï¼ŒåŒæ—¶æŸ¥è¯¢å¸–å­çš„ä¸»äººå’Œå›å¤
 	 * @return
 	 */
 	List<Message> selectAllWithUserAndReply();
@@ -25,7 +25,7 @@ public interface MessageMapper {
 	int insert(Message message);
 	
 	/**
-	 * ¸ù¾İÌû×ÓµÄidÉ¾³ıÌû×Ó
+	 * æ ¹æ®å¸–å­çš„idåˆ é™¤å¸–å­
 	 * @param id
 	 * @return
 	 */

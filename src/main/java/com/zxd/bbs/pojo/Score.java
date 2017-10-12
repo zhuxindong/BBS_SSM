@@ -63,7 +63,7 @@ public class Score {
 
 	
 	
-	//setter和getter方法
+	//setter鍜実etter鏂规硶
 	public Integer getId() {
 		return id;
 	}

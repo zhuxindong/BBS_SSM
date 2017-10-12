@@ -20,7 +20,7 @@ import com.zxd.bbs.pojo.User;
 
 /**
 * @author zhuxindong  E-mail:501801307@qq.com
-* @date ´´½¨Ê±¼ä£º2017Äê9ÔÂ9ÈÕ ÉÏÎç11:07:52
+* @date åˆ›å»ºæ—¶é—´ï¼š2017å¹´9æœˆ9æ—¥ ä¸Šåˆ11:07:52
 * @version 1.0
 */
 
@@ -40,7 +40,7 @@ public class TestMessageMapper {
 		List<Message> messages = messageMapper.selectAllWithUserAndReply();
 		
 		for (Message message : messages) {
-			System.out.println(message.getUser().getName()+" µÄÌû×Ó£º"+message.getContent()+"---"+message.getCreatetime()+"-->»Ø¸´:");
+			System.out.println(message.getUser().getName()+" çš„å¸–å­ï¼š"+message.getContent()+"---"+message.getCreatetime()+"-->å›å¤:");
 			List<Reply> replies = message.getReplies();
 			for (Reply reply : replies) {
 				System.out.println("  "+reply.getContent()+"--"+reply.getCreatetime()+"--By"+reply.getUser().getName());
@@ -57,7 +57,7 @@ public class TestMessageMapper {
 		List<Message> messages = messageMapper.selectByUserNameWithUserAndReply("201403080433");
 		
 		for (Message message : messages) {
-			System.out.println(message.getUser().getName()+" µÄÌû×Ó£º"+message.getContent()+"---"+message.getCreatetime()+"-->»Ø¸´:");
+			System.out.println(message.getUser().getName()+" çš„å¸–å­ï¼š"+message.getContent()+"---"+message.getCreatetime()+"-->å›å¤:");
 			List<Reply> replies = message.getReplies();
 			for (Reply reply : replies) {
 				System.out.println("  "+reply.getContent()+"--"+reply.getCreatetime()+"--By"+reply.getUser().getName());
@@ -82,7 +82,7 @@ public class TestMessageMapper {
 		Message message = new Message();
 		
 		message.setUser(user);
-		message.setContent("mybatis ²åÈëµÄ");
+		message.setContent("mybatis æ’å…¥çš„");
 		message.setCreatetime(createtime);
 		
 		int rows = messageMapper.insert(message);
