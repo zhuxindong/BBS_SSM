@@ -18,6 +18,11 @@
 
   }
 
+  body{
+    background-image:url(../img/bgc.jpg); 
+    background-repeat:repeat;
+  }
+
 
 
  /*修改密码按钮的样式*/
