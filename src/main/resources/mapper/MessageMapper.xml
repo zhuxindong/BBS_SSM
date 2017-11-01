@@ -35,6 +35,7 @@
      		on u.id = m.uid
         		left join (reply r left join dq1401 d on d.id=r.uid)
         		on m.id=r.mid
+        		order by m.createtime desc
 	</select>
 	
 	<select id="selectByUserNameWithUserAndReply" resultMap="MessageWithUserAndReplyResultMap">
