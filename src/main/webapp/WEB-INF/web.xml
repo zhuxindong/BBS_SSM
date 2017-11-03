@@ -2,6 +2,7 @@
   <display-name>Archetype Created Web Application</display-name>
   
   
+
   <!-- 1.启动Spring的容器  -->
   <!-- needed for ContextLoaderListener -->
 	<context-param>
@@ -65,5 +66,8 @@
   		<filter-name>HiddenHttpMethodFilter</filter-name>
   		<url-pattern>/*</url-pattern>
   	</filter-mapping>
+  	
+  	
+  	
   
 </web-app>

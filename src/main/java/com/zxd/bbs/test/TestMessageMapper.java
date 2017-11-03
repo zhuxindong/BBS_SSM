@@ -7,6 +7,8 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -28,6 +30,8 @@ import com.zxd.bbs.pojo.User;
 @ContextConfiguration(locations={"classpath:applicationContext.xml"})
 public class TestMessageMapper {
 	
+	Logger logger = LoggerFactory.getLogger(TestMessageMapper.class);
+	
 	@Autowired
 	MessageMapper messageMapper;
 	
@@ -36,6 +40,8 @@ public class TestMessageMapper {
 	
 	@Test
 	public void testSelectAllWithUserAndReply(){
+		
+		logger.info("test");
 		PageHelper.startPage(1, 10);
 		List<Message> messages = messageMapper.selectAllWithUserAndReply();
 		

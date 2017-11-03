@@ -31,11 +31,28 @@ public class UserService {
 		
 	}
 	
-	
+	/**
+	 * 根据用户名查询用户
+	 * @param username
+	 * @return
+	 */
 	public List<User> getByUserName(String username){
 		
 		return userMapper.selectByUserNameWithMsg(username);
 		
 	}
+	
+	
+	/**
+	 * 用户注册
+	 * @param user
+	 */
+	public void register(User user) {
+		
+		userMapper.insertSelective(user);
+		
+	}
+	
+	
 
 }

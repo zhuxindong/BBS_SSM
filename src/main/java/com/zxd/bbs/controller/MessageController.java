@@ -2,6 +2,8 @@ package com.zxd.bbs.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,7 @@ import com.zxd.bbs.service.MessageService;
 @Controller
 public class MessageController {
 	
+	private static final Logger logger = LoggerFactory.getLogger(MessageController.class);
 	
 	@Autowired
 	private MessageService messageService;
@@ -37,6 +40,8 @@ public class MessageController {
 	@ResponseBody
 	public Msg getMessagesWithJosn(@RequestParam(value="pn",defaultValue="1") Integer pn){
 		
+		logger.info("请求页数："+pn);
+		
 		/**
 		 * 利用pagehelper来分页查询
 		 */
@@ -46,7 +51,9 @@ public class MessageController {
 		/**
 		 * 封装成pageinfo对象
 		 */
-		PageInfo page = new PageInfo(messages);		
+		PageInfo page = new PageInfo(messages);
+		
+	
 		return Msg.success().add("pageinfo", page);
 		
 	}
