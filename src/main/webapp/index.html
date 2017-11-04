@@ -17,6 +17,84 @@
 	<title>欢迎光临本论坛</title>
 </head>
 <body>
+
+	<!-- 用户登录的模态框 -->
+	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true" id="reload1">×</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title">登陆</h4>
+          </div>
+
+          <form method="post" action="login.action">
+          	<div class="modal-body">
+          		<p>用户名：</p>
+          		<input type="text" name="username" class="form-control" required="" id="lusername">
+          		<br>
+          		<p>密码:</p>
+          		<input type="password" name="password" class="form-control" required="" id="lpassword">
+          	</div>
+
+          	<div class="modal-footer">
+          	<a href="adminlog.jsp">管理员登录</a><span id="tryagain" style="color: red"></span>	<span id="logResult"></span>   还没有用户名？ <button data-dismiss="modal" class="btn btn-default" type="button" id="tryreg" data-toggle="modal" data-target="#regModal">注册</button>
+            <button data-dismiss="modal" class="btn btn-primary" type="button" onclick="log()" id="logbtn">登陆</button>
+            <!-- <button class="btn btn-default" type="button">提交</button> -->
+          </div>
+          </form>
+          
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+	</div>
+
+
+	<!-- 用户注册的模态框 -->
+	<div class="modal fade" id="regModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button data-dismiss="modal" class="close" type="button"><span aria-hidden="true" id="reload2">×</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title">注册</h4>
+          </div>
+
+          <form method="post" action="regist.action">
+          	<div class="modal-body">
+          		<p>用户名：<span id="checkResult">  </span></p>
+          		<input type="text" name="username" class="form-control" required="" id="rusername" onkeyup="check()">
+          		<br>
+          		<p>密码:</p>
+          		<input type="password" name="password" class="form-control" required="">
+          		<br>
+          		<p>昵称：<span id="checkmg">  </span></p>
+          		<input type="text" name="name" class="form-control" required="" id="rname" onkeyup="checkminggan()">
+          		<br>
+          		<p>性别：</p>
+          		<select class="form-control" name="sex">
+				   <option value="男">男</option>
+				   <option value="女">女</option>
+				</select>
+          	</div>
+
+          	<div class="modal-footer">
+            	<button data-	dismiss="modal" class="btn btn-primary" type="submit" id="reglogbtn">注册并登陆</button>
+            	<!-- <button class="btn btn-default" type="button">提交</button> -->
+          	</div>
+          </form>
+          
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+
+	</div>
+
+
+
+
+
+
+
+
+
+
 	
 
 	<div id="navbg"></div>
@@ -30,13 +108,17 @@
 			
 			<div class="row">
 				<!-- 用户名和修改密码、退出登录的按钮 -->
-			  <div class="col-md-6 col-md-offset-6 col-xs-6 col-xs-offset-5" >
+			  <div class="col-md-6 col-md-offset-5 col-xs-6 col-xs-offset-4" >
 		
 				<div class="col-md-2 col-xs-2">
-					<p style="margin-top: 10%;margin-bottom: 5%;">用户名</p>
+					<p style="margin-top: 10%;margin-bottom: 5%;" id="nav_name">用户名</p>
 				</div>
 
+				<div class="col-md-1 col-xs-2">
+					<button data-dismiss="modal" class="btn btn-info" type="button" id="login" data-toggle="modal" data-target="#loginModal">点击登录</button>
+				</div>
 				
+
 				<div class="col-md-1 col-xs-2">
 					<button data-dismiss="modal" class="btn btn-info" type="button" id="chgpassword">修改密码</button>
 				</div>
@@ -63,12 +145,12 @@
 
 			<!-- 用户名 -->
 			<div id="username" class="col-md-10 col-xs-8">
-				<h3 style="font-family: 微软雅黑 ; margin-left: 5px;">用户名</h3>
+				<h3 style="font-family: 微软雅黑 ; margin-left: 5px;" id="main_name">用户名</h3>
 			</div>
 			
 			<!-- 个性签名 -->
 			<div id="decription" class="col-md-6 col-xs-6">
-				<h4 style="font-family: 微软雅黑 ;  margin-left: 5px;">个性签名</h4>
+				<h4 style="font-family: 微软雅黑 ;  margin-left: 5px;" id="main-desc">个性签名</h4>
 			</div>
 		</div>
 

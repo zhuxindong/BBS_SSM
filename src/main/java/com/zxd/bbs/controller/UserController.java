@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.zxd.bbs.dao.UserMapper;
+
 import com.zxd.bbs.pojo.Msg;
 import com.zxd.bbs.pojo.User;
 import com.zxd.bbs.pojo.UserToken;
@@ -44,10 +44,10 @@ public class UserController {
 		List<User> users = userService.getByUserName(username);
 		
 		if (users.size() > 0) {
-			return Msg.success().add("registinfo", "true");
+			return Msg.success().add("resinfo", "true");
 		}
 		
-		return Msg.success().add("registinfo", "false");
+		return Msg.success().add("resinfo", "false");
 		
 	}
 	
@@ -58,8 +58,8 @@ public class UserController {
 	public Msg userRegister(UserToken userToken,
 							HttpServletRequest request, 
 							HttpServletResponse response) {
-		if (userToken.getPassword().equals(userToken.getRpassword())) {
-			return Msg.fail().add("errinfo", "两次密码不一致");
+		if (!userToken.getPassword().equals(userToken.getRpassword())) {
+			return Msg.success().add("resinfo", "两次密码不一致");
 		}
 		
 		User user = new User();
@@ -85,7 +85,7 @@ public class UserController {
 			response.addCookie(cookiePssswordMD5);
 		}
 		
-		return Msg.success();
+		return Msg.success().add("resinfo", "注册成功");
 
 	}
 	
@@ -109,8 +109,8 @@ public class UserController {
 		 * 再看cookie里面，如果设置了自动登录，那就直接登录
 		 */
 		Cookie[] cookies = request.getCookies();
-		if (cookies.length==0 || cookies==null) {
-			return Msg.fail().add("errinfo", "登录已过期或未登录");
+		if (cookies==null) {
+			return Msg.success().add("resinfo", "登录已过期或未登录");
 		}
 		
 		
@@ -133,6 +133,11 @@ public class UserController {
 			
 			user = userService.getByUserName(cookieUsername.getValue()).get(0);
 			if ((user != null) && (user.getPassword().equals(cookiePssswordMD5.getValue()))) {
+				
+				/**
+				 * 加到session里面
+				 */
+				request.getSession().setAttribute("user", user);
 				return Msg.success().add("userinfo", user);
 			}
 			
@@ -144,12 +149,12 @@ public class UserController {
 			response.addCookie(cookieUsername);
 			response.addCookie(cookiePssswordMD5);
 			
-			return Msg.fail().add("errinfo","登录已过期或未登录");
+			return Msg.success().add("resinfo","登录已过期或未登录");
 			
 		}
 		
 		
-		return Msg.fail().add("errinfo", "登录已过期或未登录");
+		return Msg.success().add("resinfo", "登录已过期或未登录");
 		
 	}
 	

@@ -3,6 +3,8 @@ $(document).ready(function(){
     $('#user_picture').css('height',$('#user_picture').css('width'));
     $('#user_picture img').css('width',$('#user_picture').css('width'));
     to_page(1);
+
+    get_userinfo();
 })
 
 
@@ -178,12 +180,37 @@ function build_message_list(argument) {
 		 root_div.fadeIn(300);
 		 
 		
-
 	});
-
-
-
-
-
-
 }
+
+
+
+
+
+
+
+function get_userinfo() {
+		$.ajax({
+			url: 'userinfo',		
+			success:function(result){
+
+				console.log(result.extend.resinfo);
+
+				if (result.extend.resinfo=='登录已过期或未登录') {
+					$('#chgpassword').hide();
+					$('#logout').hide();
+					
+
+					$('#nav_name').text('您还未登录');
+					$('#main_name').text('您还未登录');
+					$('#main-desc').hide();
+				}
+				
+
+
+
+			}
+		});
+		
+		
+	};

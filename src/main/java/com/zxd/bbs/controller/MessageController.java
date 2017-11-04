@@ -25,7 +25,7 @@ import com.zxd.bbs.service.MessageService;
 @Controller
 public class MessageController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(MessageController.class);
+	
 	
 	@Autowired
 	private MessageService messageService;
@@ -40,7 +40,7 @@ public class MessageController {
 	@ResponseBody
 	public Msg getMessagesWithJosn(@RequestParam(value="pn",defaultValue="1") Integer pn){
 		
-		logger.info("请求页数："+pn);
+		
 		
 		/**
 		 * 利用pagehelper来分页查询
