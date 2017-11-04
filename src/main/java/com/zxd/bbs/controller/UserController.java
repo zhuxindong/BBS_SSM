@@ -58,6 +58,8 @@ public class UserController {
 	public Msg userRegister(UserToken userToken,
 							HttpServletRequest request, 
 							HttpServletResponse response) {
+		System.out.println(userToken);
+		
 		if (!userToken.getPassword().equals(userToken.getRpassword())) {
 			return Msg.success().add("resinfo", "两次密码不一致");
 		}
@@ -70,19 +72,23 @@ public class UserController {
 		user.setSex(userToken.getSex());
 		
 		userService.register(user);
+		System.out.println("插入数据库成功");
 		
 		request.getSession().setAttribute("user", user);
 		
 		/**
 		 * 是否3天内自动登录
 		 */
-		if (userToken.getRememberMe().equals("true")) {
+		if (userToken.getRememberMe()!=null && userToken.getRememberMe().equals("true")) {
 			Cookie cookieUsername = new Cookie("username", userToken.getUsername());
 			Cookie cookiePssswordMD5 = new Cookie("passwordMD5", MD5Util.getMD5(userToken.getPassword()));
 			cookieUsername.setMaxAge(60*60*24*3);
+			cookiePssswordMD5.setMaxAge(60*60*24*3);
 			
 			response.addCookie(cookieUsername);
 			response.addCookie(cookiePssswordMD5);
+			
+			System.out.println(" cookie设置成功");
 		}
 		
 		return Msg.success().add("resinfo", "注册成功");
@@ -152,6 +158,8 @@ public class UserController {
 			return Msg.success().add("resinfo","登录已过期或未登录");
 			
 		}
+		
+		
 		
 		
 		return Msg.success().add("resinfo", "登录已过期或未登录");

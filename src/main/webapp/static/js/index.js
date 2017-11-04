@@ -188,7 +188,7 @@ function build_message_list(argument) {
 
 
 
-
+// 获取用户的登录信息
 function get_userinfo() {
 		$.ajax({
 			url: 'userinfo',		
@@ -199,11 +199,16 @@ function get_userinfo() {
 				if (result.extend.resinfo=='登录已过期或未登录') {
 					$('#chgpassword').hide();
 					$('#logout').hide();
-					
+
 
 					$('#nav_name').text('您还未登录');
 					$('#main_name').text('您还未登录');
 					$('#main-desc').hide();
+				}
+				else{
+					$('#login').hide();
+					window.location.href="index.html";
+					console.log(result.extend.userinfo);
 				}
 				
 
@@ -211,6 +216,119 @@ function get_userinfo() {
 
 			}
 		});
-		
-		
 	};
+
+
+
+// 异步查询用户是否可用
+$('#rusername').keyup(function() {
+	/* Act on the event */
+
+	if (checkminggan('#rusername','#checkResult','#reglogbtn')==false) {
+
+		$.ajax({
+		url: 'checkregistered',
+		type: 'POST',
+		data: {'username': $(this).val()},
+		success:function(result) {
+			// body...
+			if (result.extend.resinfo=='false') {
+				$('#checkResult').html('<font color="green">可以使用</font>');
+				$('#reglogbtn').removeAttr('disabled');
+			}
+			else{
+				$('#checkResult').html('<font color="red">用户名已被注册</font>');
+				$('#reglogbtn').attr('disabled','disabled');
+			}
+		}
+
+	});
+
+
+	}
+
+	
+
+});
+
+
+// 检查敏感信息
+function checkminggan(input,output,btn) {
+	var checkinput=$(input).val();
+	if ((checkinput.search("<") != -1) || (checkinput.search(">") != -1) ) {
+		$(output).html("<font color='red'>含有敏感字符</font>");
+		$(btn).attr('disabled','disabled');
+		return true;
+	}
+	else{
+		$(output).html(" ");
+		$(btn).removeAttr('disabled');
+		return false;
+	}
+
+}
+
+
+// 检查注册时两次输入的密码是否一致
+$('#rrpassword').keyup(function() {
+	// body...
+	if ($('#rpassword').val()==$('#rrpassword').val()) {
+		$('#checkrpwd').html(' ');
+		$('#reglogbtn').removeAttr('disabled');
+	}
+	else{
+		$('#checkrpwd').html("<font color='red'>两次输入的密码不一致</font>");
+		$('#reglogbtn').attr('disabled','disabled');
+	}
+
+
+});
+
+$('#rname').keyup(function() {
+	// body...
+	checkminggan('#rname','#checkmg','#reglogbtn');
+})
+
+
+// 注册按钮的方法
+$('#reglogbtn').click(function(event) {
+	
+	if ($('#rusername').val().replace(/(^\s*)|(\s*$)/g, '')=='') {
+		$('#checkResult').html('<font color="red">不能为空</font>');
+	}else if ($('#rpassword').val().replace(/(^\s*)|(\s*$)/g, '')=='') {
+		$('#checkpwd').html('<font color="red">不能为空</font>');
+	}else if ($('#rrpassword').val().replace(/(^\s*)|(\s*$)/g, '')=='') {
+		$('#checkrpwd').html('<font color="red">不能为空</font>');
+	}else if ($('#rname').val().replace(/(^\s*)|(\s*$)/g, '')=='') {
+		$('#checkmg').html('<font color="red">不能为空</font>');
+	}else{
+
+		if ($('#rpassword').val()==$('#rrpassword').val()) {
+			$('#checkrpwd').html(' ');
+			$('#reglogbtn').removeAttr('disabled');
+
+			$.ajax({
+				url: 'register',
+				type: 'POST',
+				data: $('#regform').serialize(),
+				success:function(result){
+					console.log(result);
+
+				}
+			});
+
+
+
+		}
+		else{
+			$('#checkrpwd').html("<font color='red'>两次输入的密码不一致</font>");
+			$('#reglogbtn').attr('disabled','disabled');
+		}
+		
+	}
+
+
+
+
+	
+});

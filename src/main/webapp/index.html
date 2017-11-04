@@ -57,26 +57,34 @@
             <h4 class="modal-title">注册</h4>
           </div>
 
-          <form method="post" action="regist.action">
+          <form method="post" id="regform">
           	<div class="modal-body">
           		<p>用户名：<span id="checkResult">  </span></p>
-          		<input type="text" name="username" class="form-control" required="" id="rusername" onkeyup="check()">
+          		<input type="text" name="username" class="form-control" required="" id="rusername">
           		<br>
-          		<p>密码:</p>
-          		<input type="password" name="password" class="form-control" required="">
+          		<p>密码:  <span id="checkpwd"> </p>
+          		<input type="password" name="password" class="form-control" required="" id="rpassword">
+          		<br>
+          		<p>再次输入密码: <span id="checkrpwd"> </p>
+          		<input type="password" name="rpassword" class="form-control" required="" id="rrpassword">
           		<br>
           		<p>昵称：<span id="checkmg">  </span></p>
-          		<input type="text" name="name" class="form-control" required="" id="rname" onkeyup="checkminggan()">
+          		<input type="text" name="name" class="form-control" required="" id="rname">
           		<br>
           		<p>性别：</p>
-          		<select class="form-control" name="sex">
+      			<select class="form-control" name="sex" style="width: 30%; float: left;">
 				   <option value="男">男</option>
 				   <option value="女">女</option>
 				</select>
+				
+				<label style="width: 50%; float: left; margin-left: 20%">
+			       <input type="checkbox" name="rememberMe" value="true"> 3天内自动登录
+			    </label>
+			    <br>
           	</div>
 
           	<div class="modal-footer">
-            	<button data-	dismiss="modal" class="btn btn-primary" type="submit" id="reglogbtn">注册并登陆</button>
+            	<button data-	dismiss="modal" class="btn btn-primary" type="button" id="reglogbtn">注册并登陆</button>
             	<!-- <button class="btn btn-default" type="button">提交</button> -->
           	</div>
           </form>
