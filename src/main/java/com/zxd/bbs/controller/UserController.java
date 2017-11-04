@@ -44,17 +44,20 @@ public class UserController {
 		List<User> users = userService.getByUserName(username);
 		
 		if (users.size() > 0) {
-			return Msg.success().add("registered", "true");
+			return Msg.success().add("registinfo", "true");
 		}
 		
-		return Msg.success().add("registered", "false");
+		return Msg.success().add("registinfo", "false");
 		
 	}
 	
 	
 	
 	@RequestMapping("/register")
-	public Msg userRegister(UserToken userToken, HttpServletRequest request,HttpServletResponse response) {
+	@ResponseBody
+	public Msg userRegister(UserToken userToken,
+							HttpServletRequest request, 
+							HttpServletResponse response) {
 		if (userToken.getPassword().equals(userToken.getRpassword())) {
 			return Msg.fail().add("errinfo", "两次密码不一致");
 		}
@@ -83,8 +86,73 @@ public class UserController {
 		}
 		
 		return Msg.success();
+
+	}
+	
+	
+	@RequestMapping("/userinfo")
+	@ResponseBody
+	public Msg getUserInfo(HttpServletRequest request,
+						   HttpServletResponse response) {
 		
+		User user = null;
+		/**
+		 * 先看看session里面有没有user信息
+		 */
+		if (request.getSession().getAttribute("user") != null) {
+			user = (User) request.getSession().getAttribute("user");
+			user.setPassword(null);
+			return Msg.success().add("userinfo", user);
+		}
+		
+		/**
+		 * 再看cookie里面，如果设置了自动登录，那就直接登录
+		 */
+		Cookie[] cookies = request.getCookies();
+		if (cookies.length==0 || cookies==null) {
+			return Msg.fail().add("errinfo", "登录已过期或未登录");
+		}
+		
+		
+		Cookie cookieUsername = null;
+		Cookie cookiePssswordMD5 = null;
+		/**
+		 * 遍历获取cookie
+		 */
+		for (Cookie cookie : cookies) {
+			if ("username".equals(cookie.getName())) {
+				cookieUsername = cookie;
+			}else if ("passwordMD5".equals(cookie.getName())) {
+				cookiePssswordMD5 = cookie;
+			}		
+		}
+		/**
+		 * 如果cookie成功获取到，那么判断用户名密码是否正确
+		 */
+		if (cookieUsername!=null && cookiePssswordMD5!=null) {
+			
+			user = userService.getByUserName(cookieUsername.getValue()).get(0);
+			if ((user != null) && (user.getPassword().equals(cookiePssswordMD5.getValue()))) {
+				return Msg.success().add("userinfo", user);
+			}
+			
+			/**
+			 * 让cookie失效
+			 */
+			cookieUsername.setMaxAge(0);
+			cookiePssswordMD5.setMaxAge(0);
+			response.addCookie(cookieUsername);
+			response.addCookie(cookiePssswordMD5);
+			
+			return Msg.fail().add("errinfo","登录已过期或未登录");
+			
+		}
+		
+		
+		return Msg.fail().add("errinfo", "登录已过期或未登录");
 		
 	}
+	
+	
 	
 }
