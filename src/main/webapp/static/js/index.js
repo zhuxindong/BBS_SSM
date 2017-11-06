@@ -1,3 +1,7 @@
+//全局的用户信息
+var userinfo;
+
+
 $(document).ready(function(){
 	// 让用户头像呈现为正方形。。。
     $('#user_picture').css('height',$('#user_picture').css('width'));
@@ -194,8 +198,6 @@ function get_userinfo() {
 			url: 'userinfo',		
 			success:function(result){
 
-				console.log(result.extend.resinfo);
-
 				if (result.extend.resinfo=='登录已过期或未登录') {
 					$('#chgpassword').hide();
 					$('#logout').hide();
@@ -206,9 +208,14 @@ function get_userinfo() {
 					$('#main-desc').hide();
 				}
 				else{
-					$('#login').hide();
-					window.location.href="index.html";
-					console.log(result.extend.userinfo);
+					$('#logindiv').hide();	
+					
+					userinfo = result.extend.userinfo;
+
+					$('#nav_name').text(userinfo.name);
+					$('#main_name').text(userinfo.name);
+
+					
 				}
 				
 
@@ -293,6 +300,7 @@ $('#rname').keyup(function() {
 // 注册按钮的方法
 $('#reglogbtn').click(function(event) {
 	
+	// 表单不能为空的判断
 	if ($('#rusername').val().replace(/(^\s*)|(\s*$)/g, '')=='') {
 		$('#checkResult').html('<font color="red">不能为空</font>');
 	}else if ($('#rpassword').val().replace(/(^\s*)|(\s*$)/g, '')=='') {
@@ -302,18 +310,19 @@ $('#reglogbtn').click(function(event) {
 	}else if ($('#rname').val().replace(/(^\s*)|(\s*$)/g, '')=='') {
 		$('#checkmg').html('<font color="red">不能为空</font>');
 	}else{
-
+		// 两次输入密码要一致的判断
 		if ($('#rpassword').val()==$('#rrpassword').val()) {
 			$('#checkrpwd').html(' ');
 			$('#reglogbtn').removeAttr('disabled');
+
 
 			$.ajax({
 				url: 'register',
 				type: 'POST',
 				data: $('#regform').serialize(),
 				success:function(result){
-					console.log(result);
-
+					$('#regModal').modal('hide');
+					window.location.href="index.html";
 				}
 			});
 
@@ -326,9 +335,62 @@ $('#reglogbtn').click(function(event) {
 		}
 		
 	}
-
-
-
-
 	
+});
+
+
+//2秒内禁用按钮，防止表单重复提交
+ 	function btnactive()
+ 	{
+ 		document.getElementById("logbtn").removeAttribute('disabled');
+ 		document.getElementById("tryagain").innerHTML="";
+ 	}
+
+
+
+//用户登录
+$('#logbtn').click(function() {
+	
+	// 表单不能为空的判断
+	if ($('#lusername').val().replace(/(^\s*)|(\s*$)/g, '')=='') {
+		$('#lusername_msg').html('<font color="red">不能为空</font>');
+	}else if ($('#lpassword').val().replace(/(^\s*)|(\s*$)/g, '')=='') {
+		$('#lpassword_msg').html('<font color="red">不能为空</font>');
+	}else{
+
+		
+		$.ajax({
+				url: 'login',
+				type: 'POST',
+				data: $('#logform').serialize(),
+				success:function(result){
+
+					if (result.extend.resinfo=='用户名不存在') {
+						$('#logResult').html('<font color="red">用户名不存在</font>');
+					}else if(result.extend.resinfo=='密码错误'){
+						$('#logResult').html('<font color="red">密码错误</font>');
+					}else{
+						$('#loginModal').modal('hide');
+						window.location.href="index.html";
+					}
+					
+				}
+			});
+
+
+	}
+});
+
+
+//退出登录
+$('#logout').click(function() {
+	
+	$.ajax({
+				url: 'logout',
+				success:function(result){
+					console.log(result);
+					window.location.href="index.html";
+				}
+			});
+
 });

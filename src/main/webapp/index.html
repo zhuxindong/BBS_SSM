@@ -27,18 +27,22 @@
             <h4 class="modal-title">登陆</h4>
           </div>
 
-          <form method="post" action="login.action">
+          <form method="post" id="logform">
           	<div class="modal-body">
-          		<p>用户名：</p>
+          		<p>用户名：<span id="lusername_msg">  </span> </p>
           		<input type="text" name="username" class="form-control" required="" id="lusername">
           		<br>
-          		<p>密码:</p>
+          		<p>密码: <span id="lpassword_msg">  </span> </p>
           		<input type="password" name="password" class="form-control" required="" id="lpassword">
+          		<br>
+          		<label>
+			       <input type="checkbox" name="rememberMe" value="true"> 3天内自动登录
+			    </label>
           	</div>
 
           	<div class="modal-footer">
           	<a href="adminlog.jsp">管理员登录</a><span id="tryagain" style="color: red"></span>	<span id="logResult"></span>   还没有用户名？ <button data-dismiss="modal" class="btn btn-default" type="button" id="tryreg" data-toggle="modal" data-target="#regModal">注册</button>
-            <button data-dismiss="modal" class="btn btn-primary" type="button" onclick="log()" id="logbtn">登陆</button>
+            <button  class="btn btn-primary" type="button" id="logbtn">登陆</button>
             <!-- <button class="btn btn-default" type="button">提交</button> -->
           </div>
           </form>
@@ -84,7 +88,7 @@
           	</div>
 
           	<div class="modal-footer">
-            	<button data-	dismiss="modal" class="btn btn-primary" type="button" id="reglogbtn">注册并登陆</button>
+            	<button  class="btn btn-primary" type="button" id="reglogbtn">注册并登陆</button>
             	<!-- <button class="btn btn-default" type="button">提交</button> -->
           	</div>
           </form>
@@ -119,11 +123,11 @@
 			  <div class="col-md-6 col-md-offset-5 col-xs-6 col-xs-offset-4" >
 		
 				<div class="col-md-2 col-xs-2">
-					<p style="margin-top: 10%;margin-bottom: 5%;" id="nav_name">用户名</p>
+					<p style="margin-top: 10%;margin-bottom: 5%; text-align: center;" id="nav_name">用户名</p>
 				</div>
 
-				<div class="col-md-1 col-xs-2">
-					<button data-dismiss="modal" class="btn btn-info" type="button" id="login" data-toggle="modal" data-target="#loginModal">点击登录</button>
+				<div class="col-md-1 col-xs-2" id="logindiv">
+					<button data-dismiss="modal" class="btn btn-info" type="button"  id="login" data-toggle="modal" data-target="#loginModal">点击登录</button>
 				</div>
 				
 
