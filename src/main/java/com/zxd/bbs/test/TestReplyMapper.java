@@ -40,7 +40,7 @@ public class TestReplyMapper {
 		Message message = messageMapper.selectByUserNameWithUserAndReply("201403080433").get(0);
 		
 		Reply reply = new Reply();
-		Timestamp createtime = new Timestamp(new Date().getTime());
+		Timestamp createtime = new Timestamp(System.currentTimeMillis());
 		
 		reply.setContent("Mybatis 插入的回复");
 		reply.setUser(user);
