@@ -69,5 +69,22 @@ public class MessageService {
 		
 	}
 	
+	
+	
+	public void publish(Message message) {
+		
+		messageMapper.insert(message);
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

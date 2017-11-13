@@ -87,11 +87,9 @@ public class MessageController {
 		message.setUser(user);
 		message.setCreatetime(new Timestamp(System.currentTimeMillis()));
 		
-		
-		
-		
+		messageService.publish(message);
 
-		return null;
+		return Msg.success().add("resinfo", "插入成功");
 	}
 	
 	

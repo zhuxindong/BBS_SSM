@@ -23,7 +23,7 @@ function to_page(argument) {
 	// body...
 	$.ajax({
 		url: 'messages',
-		type: 'POST',
+		type: 'GET',
 		data: {'pn': argument},
 		success:function(result){
 
@@ -392,5 +392,30 @@ $('#logout').click(function() {
 					window.location.href="index.html";
 				}
 			});
+
+});
+
+
+
+// 发布动态
+$('#publishmessagebtn').click(function(event) {
+	/* Act on the event */
+	//如果用户未登录，那么弹出登录框
+	if (userinfo==null || userinfo==undefined ||userinfo.id<0) {
+		$('#loginModal').modal({
+			backdrop:'static'
+		});
+		return;
+	}
+
+	//校验输入框是否为空
+	if ($('#saysomething').val()=="") {
+		alert('写点什么吧，不要为空哦！');
+		return;
+	}
+
+
+
+
 
 });
