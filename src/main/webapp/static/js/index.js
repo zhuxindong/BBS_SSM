@@ -415,6 +415,29 @@ $('#publishmessagebtn').click(function(event) {
 	}
 
 
+	//先渲染了再说
+	$("#app-messages").prepend('<div class="panel panel-default" style="display: none;">'+
+						  '<div class="panel-heading">'+userinfo.name +'<font style="float: right; margin-right: 5px;">刚刚</font></div>'+
+						  '<div class="panel-body" id="shownewmessage">'+
+						    $('#saysomething').val()+
+						  '</div>'+
+						'</div>');
+
+	// 过渡动画
+	$("#app-messages div").show(500);
+
+	
+	$.ajax({
+		url: 'messages',
+		type: 'POST',
+		data: {'content': $('#saysomething').val()},
+		success:function(result){
+
+			// console.log(result);
+		}
+	});
+	
+	
 
 
 
