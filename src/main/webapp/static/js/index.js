@@ -169,8 +169,40 @@ function build_message_list(argument) {
 		var reply_hiden_div=$('<div class="collapse" style="float: right; "></div>').append(reply_page_div).attr('id','rep_msg_'+val.id);
 		reply_div.append(reply_hiden_div);
 
-         //帖子的内容信息
-         var content_div=$('<div></div>').addClass('panel-body').append(val.content).append(reply_div);
+
+
+		// 分割线的根元素
+		var fengexian=$('<div style="text-align: center; margin-top: 32px;">'+
+												'<span type="text" class="text-muted" style="text-align: center;">--评论区--</span>'+
+											'</div>');
+
+
+		// 评论为空时
+		if (val.replies==null || val.replies==[] || val.replies==""  || val.replies==undefined) {
+
+			var reply_content=$('<div style="float: left; margin-top: 8px;" class="text-muted">暂无评论</div>')
+		}else{
+			// 评论不为空时，构建评论
+			var reply_content=$('<div></div>');
+			$.each(val.replies, function(index, val) {
+				 /* iterate through array or object */
+				 reply_content.append('<div style="float: left; margin-top: 8px;">'+
+													'<div class="input-group">'+
+											            '<span class="input-group-addon">'+val.user.name+'</span>'+
+											            '<span type="text" class="form-control">'+val.content+'</span>'+
+											        '</div>'+
+												'</div>');
+
+
+			});
+
+
+		}
+
+
+
+         //帖子的内容信息=内容+评论面板+评论的内容
+         var content_div=$('<div></div>').addClass('panel-body').append(val.content).append(reply_div).append(fengexian).append(reply_content);
 
 
 
