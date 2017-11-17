@@ -13,6 +13,6 @@ public interface ReplyMapper {
 	
 	int insert(Reply reply);
 	
-	int deleteById(long id);
+	int deleteById(Integer id);
 	
 }

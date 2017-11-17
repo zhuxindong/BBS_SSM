@@ -11,8 +11,8 @@
 	
 	
 	<delete id="deleteById">
-		delete from message 
-		where id=#{id,jdbcType=INTEGER}
+		delete from reply 
+		where id=#{id}
 	</delete>
 	
 	
