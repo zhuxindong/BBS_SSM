@@ -42,7 +42,7 @@ public class MessageService {
 	 * 根据帖子的id删除帖子，需要先删除该帖子下的所有回复
 	 * @param id
 	 */
-	public void deleteMessageById(int id) {
+	public void deleteMessageById(Integer id) {
 		
 		/**
 		 * 先根据帖子的id查询到该帖子
@@ -71,6 +71,10 @@ public class MessageService {
 	
 	
 	
+	/**
+	 * 插入新的帖子
+	 * @param message
+	 */
 	public void publish(Message message) {
 		
 		messageMapper.insert(message);

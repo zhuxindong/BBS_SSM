@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -64,8 +65,13 @@ public class MessageController {
 	}
 	
 	
-	
-	@RequestMapping(value="messages",method=RequestMethod.POST)
+	/**
+	 * 发布动态
+	 * @param content
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/messages",method=RequestMethod.POST)
 	@ResponseBody
 	public Msg publishMessage(@RequestParam(value="content") String content,
 								HttpServletRequest request) {
@@ -89,17 +95,20 @@ public class MessageController {
 		
 		messageService.publish(message);
 
-		return Msg.success().add("resinfo", "插入成功");
+		return Msg.success().add("resinfo", "发表成功");
 	}
 	
 	
 	
 	
 	
-	
-	public Msg deleteMessageWithReplyById(int id) {
+	@RequestMapping(value="/messages/{id}",method=RequestMethod.DELETE)
+	@ResponseBody
+	public Msg deleteMessageWithReplyById(@PathVariable("id") Integer id) {
 		
-		return null;
+		messageService.deleteMessageById(id);
+		
+		return Msg.success().add("resinfo", "删除成功");
 	}
 
 }

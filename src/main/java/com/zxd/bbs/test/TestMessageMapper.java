@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.github.pagehelper.PageHelper;
 import com.zxd.bbs.dao.MessageMapper;
+import com.zxd.bbs.dao.ReplyMapper;
 import com.zxd.bbs.dao.UserMapper;
 import com.zxd.bbs.pojo.Message;
 import com.zxd.bbs.pojo.Reply;
@@ -34,6 +35,9 @@ public class TestMessageMapper {
 	
 	@Autowired
 	MessageMapper messageMapper;
+	
+	@Autowired
+	ReplyMapper replyMapper;
 	
 	@Autowired
 	SqlSession sqlSession;
@@ -96,6 +100,40 @@ public class TestMessageMapper {
 		System.out.println(rows);
 		
 	}
+	
+	
+	@Test
+	public void testDeleteMessageById() {
+		
+		Integer id = 673;
+		
+		/**
+		 * 先根据帖子的id查询到该帖子
+		 */
+		Message message = messageMapper.selectByIdWithUserAndReply(id).get(0);
+		
+		/**
+		 * 获取该帖子下的所有回复
+		 */
+		List<Reply> replies = message.getReplies();
+		
+		/**
+		 * 遍历删除回复
+		 */
+		for (Reply reply : replies) {
+			replyMapper.deleteById(reply.getId());
+		}
+		
+		
+		/**
+		 * 删除回复之后再删除帖子
+		 */
+		messageMapper.deleteById(id);
+		
+	}
+	
+	
+	
 	
 	
 	
