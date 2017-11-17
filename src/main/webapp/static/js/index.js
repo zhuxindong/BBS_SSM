@@ -145,8 +145,22 @@ function build_message_list(argument) {
 		 var root_div=$('<div style="display: none;"></div>').addClass('panel panel-default').attr('id','msg'+val.id);
 
 		 //帖子的表头信息
-		 var head_div=$('<div></div>').addClass('panel-heading').append(val.user.name)   //加入帖子主人,下面是加入创建时间
-		 														.append($('<font></font>').append(val.createtime).css({'float':"right",'margin-right':"5px"}));
+		 var head_div=$('<div></div>').addClass('panel-heading').append(val.user.name);   //加入帖子主人
+
+
+		 // 渲染帖子的发布时间												
+		 head_div.append($('<font></font>').append(val.createtime).css({'float':"right",'margin-right':"5px"}));
+
+		 try{
+		 //是否是帖子的主人，如果是，渲染删除按钮
+			 if (val.user.username==userinfo.username) {
+			 	head_div.append($('<a href="javascript:void(0)" style="float: right;margin-right: 10px;" onclick="delmsg('+val.id+')">删除</a>'));
+			 }
+		 	
+		 }catch(error){
+
+		 	console.log('用户未登录');
+		 }
 
 
 
@@ -474,3 +488,26 @@ $('#publishmessagebtn').click(function(event) {
 
 
 });
+
+
+
+//删除帖子
+function delmsg(id) {
+
+	var msg_id="#msg"+id;
+
+	
+	
+	$.ajax({
+		url: 'messages/'+id,
+		type: 'POST',
+		data: {_method: 'DELETE'},
+		success:function (result) {
+
+			//动画渲染
+			$(msg_id).hide(500);
+
+		}
+	});
+
+}
