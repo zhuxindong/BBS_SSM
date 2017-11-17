@@ -117,12 +117,16 @@ public class TestMessageMapper {
 		 */
 		List<Reply> replies = message.getReplies();
 		
+		System.out.println(replies.size());
+		
 		/**
 		 * 遍历删除回复
 		 */
 		for (Reply reply : replies) {
+			System.out.println(reply.getId());
 			replyMapper.deleteById(reply.getId());
 		}
+		
 		
 		
 		/**

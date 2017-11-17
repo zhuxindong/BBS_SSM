@@ -52,15 +52,20 @@ public class TestReplyMapper {
 		System.out.println(rows);
 		
 		
-		
-		
-		
-		
-		
-		
 	}
 	
 	
+	@Test
+	public void testDeleteById() {
+		
+		ReplyMapper replyMapper = sqlSession.getMapper(ReplyMapper.class);
+		
+		Integer id = 43;
+		
+		int rows = replyMapper.deleteById(id);
+		
+		System.out.println(rows);
+	}
 	
 	
 	
