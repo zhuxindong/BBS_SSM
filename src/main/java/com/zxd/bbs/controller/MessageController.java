@@ -101,7 +101,11 @@ public class MessageController {
 	
 	
 	
-	
+	/**
+	 * 删除帖子
+	 * @param id
+	 * @return
+	 */
 	@RequestMapping(value="/messages/{id}",method=RequestMethod.DELETE)
 	@ResponseBody
 	public Msg deleteMessageWithReplyById(@PathVariable("id") Integer id) {

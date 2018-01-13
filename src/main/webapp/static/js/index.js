@@ -159,7 +159,7 @@ function build_message_list(argument) {
 		 	
 		 }catch(error){
 
-		 	console.log('用户未登录');
+		 	// console.log('用户未登录');
 		 }
 
 
