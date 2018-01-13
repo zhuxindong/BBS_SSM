@@ -110,6 +110,9 @@ public class MessageController {
 	@ResponseBody
 	public Msg deleteMessageWithReplyById(@PathVariable("id") Integer id) {
 		
+		/**
+		 * 待加入校验功能
+		 */
 		messageService.deleteMessageById(id);
 		
 		return Msg.success().add("resinfo", "删除成功");
