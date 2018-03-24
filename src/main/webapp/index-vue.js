@@ -18,223 +18,6 @@ function getLocalTime(nS) {
 } 
 
 
-// 根据传入的页码号，分页查询
-function to_page(argument) {
-	// body...
-	$.ajax({
-		url: 'messages',
-		type: 'GET',
-		data: {'pn': argument},
-		success:function(result){
-
-			//构建分页条
-			build_page_nav(result);
-
-
-
-			//渲染帖子列表
-			build_message_list(result);
-			
-
-			
-
-
-		}
-	});	
-}
-
-
-
-
-
-
-
-// 构建分页条信息
-function build_page_nav(argument) {
-	// 清空原来的区域
-	$('#page_nav_area').empty();
-
-	// 根节点
-	var page_ul = $('<ul></ul>').addClass('pagination');
-
-	// 首页
-	var firstPage_li = $('<li></li>').append($('<a></a>').append('首页').attr('href','#'));
-	firstPage_li.click(function(event) {
-		/* Act on the event */
-		to_page(1);
-	});
-
-
-	// 尾页
-	var lastPage_li = $('<li></li>').append($('<a></a>').append('末页').attr('href','#'));
-	lastPage_li.click(function(event) {
-		/* Act on the event */
-		to_page(argument.extend.pageinfo.pages);
-	});
-
-
-
-	// 是否有前一页
-	if (argument.extend.pageinfo.hasPreviousPage == true) {
-		var prePage_li = $('<li></li>').append($('<a></a>').append('&laquo;').attr('href','#'));
-
-		prePage_li.click(function(event) {
-			/* Act on the event */
-			to_page(argument.extend.pageinfo.pageNum-1);
-		});
-
-	}
-	
-	// 是否有后一页
-	if (argument.extend.pageinfo.hasNextPage == true) {
-		var nextPage_li = $('<li></li>').append($('<a></a>').append('&raquo;').attr('href','#'));
-
-		nextPage_li.click(function(event) {
-			/* Act on the event */
-			to_page(argument.extend.pageinfo.pageNum+1);
-		});
-
-	}
-	
-
-	page_ul.append(firstPage_li).append(prePage_li);
-
-
-	// 循环构建分页按钮信息
-	$.each(argument.extend.pageinfo.navigatepageNums, function(index, val) {
-		 /* iterate through array or object */
-		 var num_li = $('<li></li>').append($('<a></a>').append(val).attr('href','#'));
-
-		 // 判断是否为当前页
-		 if (argument.extend.pageinfo.pageNum == val) {num_li.addClass('active');}
-		 // 绑定点击事件
-		 num_li.click(function(event) {
-		 	/* Act on the event */
-		 	to_page(val);
-		 });
-
-		 page_ul.append(num_li);
-
-	});
-
-	page_ul.append(nextPage_li).append(lastPage_li);
-
-	var page_nav = $('<nav></nav>').append(page_ul);
-
-	page_nav.appendTo('#page_nav_area');
-
-}
-
-
-
-
-// 渲染帖子信息
-function build_message_list(argument) {
-	// 先清空
-
-	$('#app-messages').empty();
-
-	//获取帖子列表
-	var msg=argument.extend.pageinfo.list;
-
-	// 通过遍历来构建帖子
-	$.each(msg, function(index, val) {
-		 /* iterate through array or object */
-
-		 // 一个帖子的根元素div
-		 var root_div=$('<div style="display: none;"></div>').addClass('panel panel-default').attr('id','msg'+val.id);
-
-		 //帖子的表头信息
-		 var head_div=$('<div></div>').addClass('panel-heading').append(val.user.name);   //加入帖子主人
-
-
-		 // 渲染帖子的发布时间												
-		 head_div.append($('<font></font>').append(val.createtime).css({'float':"right",'margin-right':"5px"}));
-
-		 try{
-		 //是否是帖子的主人，如果是，渲染删除按钮
-			 if (val.user.username==userinfo.username) {
-			 	head_div.append($('<a href="javascript:void(0)" style="float: right;margin-right: 10px;" onclick="delmsg('+val.id+')">删除</a>'));
-			 }
-		 	
-		 }catch(error){
-
-		 	// console.log('用户未登录');
-		 }
-
-
-
-
-
-         // 发表评论的根元素,
-         var reply_div=$('<div style="float: right; margin-top: 10px;"></div>').append($('<button class="btn btn-info" type="button" data-toggle="collapse" aria-expanded="false"'
-         																				+'aria-controls="collapseExample" style="float: right;">'
-         																				+'评论</button>').attr('data-target','#rep_msg_'+val.id)); //加入按钮
-																	         	// .append($('<div class="collapse" style="float: right; ">'
-																	         	// +'<div id="reply-page">'
-																	         	// +'<form action="" method="post"></form> </div></div>').attr('id','rep_msg_'+val.id));//加入输入框
-		// 评论输入框的textarea
-		var reply_textarea_div=$('<textarea  class="form-control" style="min-height: 82px;"></textarea>').attr('id','reply_text_'+val.id);										         	
-		// 评论输入框的回复按钮
-		var reply_button_div=$('<button type="button" class="btn">发表</button>').attr('onclick','publishreply('+val.id+')');
-		// 评论输入框的form
-		var reply_form_div=$('<form action="" method="post"></form>').append(reply_textarea_div).append(reply_button_div);
-		var reply_page_div=$('<div id="reply-page"></div>').append(reply_form_div);
-		var reply_hiden_div=$('<div class="collapse" style="float: right; "></div>').append(reply_page_div).attr('id','rep_msg_'+val.id);
-		reply_div.append(reply_hiden_div);
-
-
-
-		// 分割线的根元素
-		var fengexian=$('<div style="text-align: center; margin-top: 32px;">'+
-												'<span type="text" class="text-muted" style="text-align: center;">--评论区--</span>'+
-											'</div>');
-
-
-		// 评论为空时
-		if (val.replies==null || val.replies==[] || val.replies==""  || val.replies==undefined) {
-
-			var reply_content=$('<div style="float: left; margin-top: 8px;" class="text-muted">暂无评论</div>')
-		}else{
-			// 评论不为空时，构建评论
-			var reply_content=$('<div></div>');
-			$.each(val.replies, function(index, val) {
-				 /* iterate through array or object */
-				 reply_content.append('<div style="float: left; margin-top: 8px;">'+
-													'<div class="input-group">'+
-											            '<span class="input-group-addon">'+val.user.name+'</span>'+
-											            '<span type="text" class="form-control">'+val.content+'</span>'+
-											        '</div>'+
-												'</div>');
-
-
-			});
-
-
-		}
-
-
-
-         //帖子的内容信息=内容+评论面板+评论的内容
-         var content_div=$('<div></div>').addClass('panel-body').append(val.content).append(reply_div).append(fengexian).append(reply_content);
-
-
-
-
-		 //将构建好的元素加入根元素
-		 root_div.append(head_div).append(content_div);
-
-
-		 // 将根元素加入页面
-		 root_div.appendTo('#app-messages');
-		 root_div.fadeIn(300);
-		 
-		
-	});
-}
-
-
-
 
 
 
@@ -417,7 +200,7 @@ $('#logbtn').click(function() {
 						$('#logResult').html('<font color="red">密码错误</font>');
 					}else{
 						$('#loginModal').modal('hide');
-						window.location.href="index.html";
+						window.location.href="index-vue.html";
 					}
 					
 				}
@@ -435,7 +218,7 @@ $('#logout').click(function() {
 				url: 'logout',
 				success:function(result){
 					console.log(result);
-					window.location.href="index.html";
+					window.location.href="index-vue.html";
 				}
 			});
 
@@ -511,4 +294,40 @@ function delmsg(id) {
 	});
 
 }
+
+
+
+// 根据传入的页码号，分页查询
+function to_page(argument) {
+	// body...
+	$.ajax({
+		url: 'messages',
+		type: 'GET',
+		data: {'pn': argument},
+		success:function(result){
+
+
+			vue_msglist.$data.pages=result.extend.pageinfo;
+
+		}
+	});	
+}
+
+
+
+//vue渲染帖子信息和导航条
+var vue_msglist = new Vue({
+	el: "#app-messages",
+	data:{
+		pages:{"pageNum":1,"pageSize":10,"size":10,"startRow":1,"endRow":10,"total":52,"pages":6,"list":[{"id":2543,"content":"修复了删除动态的bug","createtime":"2017-11-17 11:10:14","user":{"id":37,"username":"201403080433 ","password":null,"name":"朱鑫栋","sex":null,"description":null,"messages":null,"score":null},"replies":[]},{"id":2541,"content":"发布动态功能完成","createtime":"2017-11-13 18:43:47","user":{"id":37,"username":"201403080433 ","password":null,"name":"朱鑫栋","sex":null,"description":null,"messages":null,"score":null},"replies":[]},{"id":2533,"content":"mybatis 插入的","createtime":"2017-11-03 18:42:20","user":{"id":37,"username":"201403080433 ","password":null,"name":"朱鑫栋","sex":null,"description":null,"messages":null,"score":null},"replies":[]},{"id":2532,"content":"mybatis 插入的","createtime":"2017-11-03 18:40:13","user":{"id":37,"username":"201403080433 ","password":null,"name":"朱鑫栋","sex":null,"description":null,"messages":null,"score":null},"replies":[]},{"id":2531,"content":"wqeqweqwe","createtime":"2017-10-23 10:39:40","user":{"id":63,"username":"CC123","password":null,"name":"cc123","sex":null,"description":null,"messages":null,"score":null},"replies":[]},{"id":2530,"content":"修复tomcat崩溃的bug，修复评论异常的bug，优化查询效率","createtime":"2017-07-14 15:04:28","user":{"id":37,"username":"201403080433 ","password":null,"name":"朱鑫栋","sex":null,"description":null,"messages":null,"score":null},"replies":[{"id":39,"content":"可以评论了","createtime":"2017-07-14 15:04:36","user":{"id":37,"username":"201403080433 ","password":null,"name":"朱鑫栋","sex":null,"description":null,"messages":null,"score":null},"message":null}]},{"id":2526,"content":"可以注册","createtime":"2017-06-23 22:23:29","user":{"id":57,"username":"123","password":null,"name":"123","sex":null,"description":null,"messages":null,"score":null},"replies":[{"id":40,"content":"gg","createtime":"2017-07-21 21:59:47","user":{"id":37,"username":"201403080433 ","password":null,"name":"朱鑫栋","sex":null,"description":null,"messages":null,"score":null},"message":null}]},{"id":2525,"content":"性能优化，全部开启懒加载，采用迫切左外连接查询","createtime":"2017-06-23 22:22:40","user":{"id":37,"username":"201403080433 ","password":null,"name":"朱鑫栋","sex":null,"description":null,"messages":null,"score":null},"replies":[]},{"id":2522,"content":"修复了不能注册的bug","createtime":"2017-06-21 20:23:34","user":{"id":37,"username":"201403080433 ","password":null,"name":"朱鑫栋","sex":null,"description":null,"messages":null,"score":null},"replies":[]},{"id":1119,"content":"为什么要js分页呢","createtime":"2017-06-17 22:36:08","user":{"id":48,"username":"asd","password":null,"name":"asd","sex":null,"description":null,"messages":null,"score":null},"replies":[{"id":32,"content":"123","createtime":"2017-06-18 14:10:37","user":{"id":37,"username":"201403080433 ","password":null,"name":"朱鑫栋","sex":null,"description":null,"messages":null,"score":null},"message":null}]}],"prePage":0,"nextPage":2,"isFirstPage":true,"isLastPage":false,"hasPreviousPage":false,"hasNextPage":true,"navigatePages":8,"navigatepageNums":[1,2,3,4,5,6],"navigateFirstPage":1,"navigateLastPage":6,"lastPage":6,"firstPage":1},
+	},
+	methods:{
+		topage:function(pn){
+			to_page(pn);
+		}
+	}
+
+})
+
+
 
