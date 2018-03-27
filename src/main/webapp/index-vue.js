@@ -40,6 +40,7 @@ function get_userinfo() {
 					$('#logindiv').hide();	
 					
 					userinfo = result.extend.userinfo;
+					vue_msglist.$data.myinfo = result.extend.userinfo;
 
 					$('#nav_name').text(userinfo.name);
 					$('#main_name').text(userinfo.name);
@@ -244,27 +245,36 @@ $('#publishmessagebtn').click(function(event) {
 	}
 
 
-	//先渲染了再说
-	$("#app-messages").prepend('<div class="panel panel-default" style="display: none;">'+
-						  '<div class="panel-heading">'+userinfo.name +'<font style="float: right; margin-right: 5px;">刚刚</font></div>'+
-						  '<div class="panel-body" id="shownewmessage">'+
-						    $('#saysomething').val()+
-						  '</div>'+
-						'</div>');
+	//先检测是不是首页，如果不是首页，跳转到首页
+	if (vue_msglist.$data.pages.pageNum != 1) {
+		to_page(1);
+	}
 
-	// 过渡动画
-	$("#app-messages div").show(500);
+	// 构建新帖子对象
+	var new_msg = {
+		"content":$('#saysomething').val(),
+		"createtime":new Date().toLocaleString(),
+		user:{
+			name:vue_msglist.$data.myinfo.name
+		}
+	}
+
+	console.log(new_msg);
+	// 加入vue对象里面
+	console.log(typeof(vue_msglist.$data.pages.list));
+	vue_msglist.$data.pages.list.splice(0,new_msg);
+
 
 	
-	$.ajax({
-		url: 'messages',
-		type: 'POST',
-		data: {'content': $('#saysomething').val()},
-		success:function(result){
+	//往服务器发请求
+	// $.ajax({
+	// 	url: 'messages',
+	// 	type: 'POST',
+	// 	data: {'content': $('#saysomething').val()},
+	// 	success:function(result){
 
-			// console.log(result);
-		}
-	});
+	// 	}
+	// });
 	
 	
 
@@ -275,7 +285,7 @@ $('#publishmessagebtn').click(function(event) {
 
 
 //删除帖子
-function delmsg(id) {
+function del_msg(id) {
 
 	var msg_id="#msg"+id;
 
@@ -320,11 +330,28 @@ var vue_msglist = new Vue({
 	el: "#app-messages",
 	data:{
 		pages:{"pageNum":1,"pageSize":10,"size":10,"startRow":1,"endRow":10,"total":52,"pages":6,"list":[{"id":2543,"content":"修复了删除动态的bug","createtime":"2017-11-17 11:10:14","user":{"id":37,"username":"201403080433 ","password":null,"name":"朱鑫栋","sex":null,"description":null,"messages":null,"score":null},"replies":[]},{"id":2541,"content":"发布动态功能完成","createtime":"2017-11-13 18:43:47","user":{"id":37,"username":"201403080433 ","password":null,"name":"朱鑫栋","sex":null,"description":null,"messages":null,"score":null},"replies":[]},{"id":2533,"content":"mybatis 插入的","createtime":"2017-11-03 18:42:20","user":{"id":37,"username":"201403080433 ","password":null,"name":"朱鑫栋","sex":null,"description":null,"messages":null,"score":null},"replies":[]},{"id":2532,"content":"mybatis 插入的","createtime":"2017-11-03 18:40:13","user":{"id":37,"username":"201403080433 ","password":null,"name":"朱鑫栋","sex":null,"description":null,"messages":null,"score":null},"replies":[]},{"id":2531,"content":"wqeqweqwe","createtime":"2017-10-23 10:39:40","user":{"id":63,"username":"CC123","password":null,"name":"cc123","sex":null,"description":null,"messages":null,"score":null},"replies":[]},{"id":2530,"content":"修复tomcat崩溃的bug，修复评论异常的bug，优化查询效率","createtime":"2017-07-14 15:04:28","user":{"id":37,"username":"201403080433 ","password":null,"name":"朱鑫栋","sex":null,"description":null,"messages":null,"score":null},"replies":[{"id":39,"content":"可以评论了","createtime":"2017-07-14 15:04:36","user":{"id":37,"username":"201403080433 ","password":null,"name":"朱鑫栋","sex":null,"description":null,"messages":null,"score":null},"message":null}]},{"id":2526,"content":"可以注册","createtime":"2017-06-23 22:23:29","user":{"id":57,"username":"123","password":null,"name":"123","sex":null,"description":null,"messages":null,"score":null},"replies":[{"id":40,"content":"gg","createtime":"2017-07-21 21:59:47","user":{"id":37,"username":"201403080433 ","password":null,"name":"朱鑫栋","sex":null,"description":null,"messages":null,"score":null},"message":null}]},{"id":2525,"content":"性能优化，全部开启懒加载，采用迫切左外连接查询","createtime":"2017-06-23 22:22:40","user":{"id":37,"username":"201403080433 ","password":null,"name":"朱鑫栋","sex":null,"description":null,"messages":null,"score":null},"replies":[]},{"id":2522,"content":"修复了不能注册的bug","createtime":"2017-06-21 20:23:34","user":{"id":37,"username":"201403080433 ","password":null,"name":"朱鑫栋","sex":null,"description":null,"messages":null,"score":null},"replies":[]},{"id":1119,"content":"为什么要js分页呢","createtime":"2017-06-17 22:36:08","user":{"id":48,"username":"asd","password":null,"name":"asd","sex":null,"description":null,"messages":null,"score":null},"replies":[{"id":32,"content":"123","createtime":"2017-06-18 14:10:37","user":{"id":37,"username":"201403080433 ","password":null,"name":"朱鑫栋","sex":null,"description":null,"messages":null,"score":null},"message":null}]}],"prePage":0,"nextPage":2,"isFirstPage":true,"isLastPage":false,"hasPreviousPage":false,"hasNextPage":true,"navigatePages":8,"navigatepageNums":[1,2,3,4,5,6],"navigateFirstPage":1,"navigateLastPage":6,"lastPage":6,"firstPage":1},
+		myinfo:{username:"null"}
+
 	},
 	methods:{
 		topage:function(pn){
 			to_page(pn);
+		},
+		delmsg:function(mid){
+
+			$.ajax({
+				url: 'messages/'+mid,
+				type: 'POST',
+				data: {_method: 'DELETE'},
+				success:function (result) {
+
+					//动画渲染
+					$('#m_'+mid).hide(500);
+
+				}
+			});
 		}
+
 	}
 
 })

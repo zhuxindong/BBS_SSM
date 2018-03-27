@@ -66,17 +66,23 @@
 
 
 /*vue过渡动画*/
-.t-msglist-enter-active, .t-msglist-leave-active{
-	transition: all 0.3s;
+.t-msglist-enter-active{
+	transition: all 1s;
 }
 
-.t-msglist-leave-to
-/* .list-leave-active for below version 2.1.8 */ {
-  opacity: 0;
-  transform: translateX(30px);
+
+.t-msglist-leave-active{
+  transition: all 0.3s;
 }
 
-.t-msglist-enter-to{
-  opacity: 0;
+
+.t-msglist-enter{
+  opacity: 0.2;
   transform: translateY(30px);
 }
+
+.t-msglist-leave-to{
+  opacity: 0.2;
+  /* transform: translateX(30px); */
+}
+
