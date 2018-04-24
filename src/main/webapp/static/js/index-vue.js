@@ -201,7 +201,7 @@ $('#logbtn').click(function() {
 						$('#logResult').html('<font color="red">密码错误</font>');
 					}else{
 						$('#loginModal').modal('hide');
-						window.location.href="index-vue.html";
+						window.location.href="index.html";
 					}
 					
 				}
@@ -250,31 +250,39 @@ $('#publishmessagebtn').click(function(event) {
 		to_page(1);
 	}
 
-	// 构建新帖子对象
-	var new_msg = {
-		"content":$('#saysomething').val(),
-		"createtime":new Date().toLocaleString(),
-		user:{
-			name:vue_msglist.$data.myinfo.name
-		}
-	}
-
-	console.log(new_msg);
-	// 加入vue对象里面
-	console.log(typeof(vue_msglist.$data.pages.list));
-	vue_msglist.$data.pages.list.splice(0,new_msg);
+	
 
 
 	
-	//往服务器发请求
-	// $.ajax({
-	// 	url: 'messages',
-	// 	type: 'POST',
-	// 	data: {'content': $('#saysomething').val()},
-	// 	success:function(result){
+	// 往服务器发请求
+	$.ajax({
+		url: 'messages',
+		type: 'POST',
+		data: {'content': $('#saysomething').val()},
+		success:function(result){
 
-	// 	}
-	// });
+
+			// 构建新帖子对象
+			var new_msg = {
+				"id":result.extend.new_message_id,
+				"content":$('#saysomething').val(),
+				"createtime":new Date().toLocaleString(),
+				user:{
+					name:vue_msglist.$data.myinfo.name
+				}
+			}
+
+			console.log(new_msg);
+			// 加入vue对象里面
+			console.log(typeof(vue_msglist.$data.pages.list));
+			console.log(vue_msglist.$data.pages.list);
+			vue_msglist.$data.pages.list.unshift(new_msg);
+
+
+
+
+		}
+	});
 	
 	
 

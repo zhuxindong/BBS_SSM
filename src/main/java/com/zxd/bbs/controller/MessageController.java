@@ -95,7 +95,8 @@ public class MessageController {
 		
 		messageService.publish(message);
 
-		return Msg.success().add("resinfo", "发表成功");
+		return Msg.success().add("resinfo", "发表成功")
+							.add("new_message_id", message.getId());
 	}
 	
 	

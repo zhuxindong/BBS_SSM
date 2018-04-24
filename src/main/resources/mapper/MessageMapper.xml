@@ -69,7 +69,8 @@
 	
 	
 
-	<insert id="insert" parameterType="com.zxd.bbs.pojo.Message">
+	<insert id="insert" parameterType="com.zxd.bbs.pojo.Message"
+			useGeneratedKeys="true" keyProperty="id" keyColumn="id">
 		insert into message(uid,content,createtime)
 		values(#{user.id},#{content},#{createtime})
 	</insert>

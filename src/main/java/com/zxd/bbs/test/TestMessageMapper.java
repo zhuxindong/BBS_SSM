@@ -97,7 +97,8 @@ public class TestMessageMapper {
 		
 		int rows = messageMapper.insert(message);
 		
-		System.out.println(rows);
+		System.out.println("rows:"+rows);
+		System.out.println("id:"+message.getId());
 		
 	}
 	

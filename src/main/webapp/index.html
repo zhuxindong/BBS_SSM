@@ -7,6 +7,7 @@
 
 	<script type="text/javascript" src="static/js/jquery-3.2.1.min.js"></script>
 	<script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+	<script src="https://cdn.bootcss.com/vue/2.5.15/vue.js"></script>
 	
 	
 
@@ -193,44 +194,127 @@
 						<button type="button" class="btn" id="publishmessagebtn" style="width: 25%; margin-top: 1%;float: right;">发布</button>
 					</form>
 				</div>
+				
 
 				<!-- 分页导航条和分页信息 -->
-				<div id="page_nav_area" style="margin-top: 5%">
+				<div id="app-messages" style="margin-top: 5%">
 
 					
 
-					<!-- <nav aria-label="Page navigation">
+					<nav aria-label="Page navigation" style="margin-top: 20px; height: 90px;">
 					  <ul class="pagination" id="app-pagination">
-						<li><span>第  <span style="color: #0A0A0A ">1</span>  /  <span style="color: #F80606">2</span>  页</span></li>
-					  	<li  id="nav_first"><a href="#">首页</a></li>
-					    <li  id="nav_go_pre">
-					      <a href="#" aria-label="Previous">
+					  	<!-- 展示当前页 -->
+						<li><span>第  <span style="color: #0A0A0A ">
+						{{pages.pageNum}}</span>  /  <span style="color: #F80606">{{pages.pages}}</span>  页</span>
+						</li>
+						<!-- 首页 -->
+					  	<li  id="nav_first"><a href="#" @click.prevent="topage(pages.firstPage)">首页</a></li>
+
+					  	<!-- 前一页 -->
+					    <li  id="nav_go_pre" :class="{hidden:!pages.hasPreviousPage}">
+					      <a href="#" aria-label="Previous" @click.prevent="topage(pages.pageNum-1)">
 					        <span aria-hidden="true">&laquo;</span>
 					      </a>
 					    </li>
-					    <li id="nav_1" v-for="p in vue_pag"><a href="#">{{p}}</a></li>
-					    <li id="nav_2"><a href="#">#</a></li>
-					    <li id="nav_3"><a href="#">#</a></li>
-					    <li id="nav_4"><a href="#">#</a></li>
-					    <li id="nav_5"><a href="#">#</a></li>
-					    <li  id="nav_go_next">
-					      <a href="#" aria-label="Next">
+
+					    <!-- 翻页按钮渲染 -->
+					    <li id="nav_1" v-for="p in pages.navigatepageNums" :class="{active:p==pages.pageNum}">
+					    	<a href="#" @click.prevent="topage(p)">{{p}}</a>
+					    </li>
+
+					    <!-- 下一页 -->
+					    <li  id="nav_go_next" :class="{hidden:!pages.hasNextPage}">
+					      <a href="#" aria-label="Next" @click.prevent="topage(pages.pageNum+1)">
 					        <span aria-hidden="true">&raquo;</span>
 					      </a>
 					    </li>
-					    <li  id="nav_last"><a href="#">末页</a></li> 
+
+					    <!-- 尾页 -->
+					    <li  id="nav_last"><a href="#" @click.prevent="topage(pages.lastPage)">末页</a></li> 
 					  </ul>
-					</nav> -->
-				</div>
+					</nav>
+
+
+				<!-- </div> -->
 
 				
 
 				<!-- 帖子信息 -->
-				<div id="app-messages">
 					
 					
+					<transition-group name="t-msglist">
+						<div class="panel panel-default" v-for="msg in pages.list" :key="msg.id" :id="'m_'+msg.id">
+						  <div class="panel-heading">{{ msg.user.name }}   <font style="float: right; margin-right: 5px;">发表于：{{msg.createtime}}</font>
+								<a href="javascript:void(0)" style="float: right;margin-right: 10px;"
+								 v-if="msg.user.username==myinfo.username" @click.prevent="delmsg(msg.id)">
+									删除
+								</a>
+						  </div>
+						  <div class="panel-body">
+						    {{ msg.content }}
+
+							<br>
+							<br>
+							<br>
+							
+							<div v-if="!(msg.replies===undefined || msg.replies.length==0)">
+								<div style="float: left; margin-top: 8px;" v-for='rp in msg.replies' :key="rp.id">
+									<div class="input-group">
+							            <span class="input-group-addon">{{rp.user.name}}</span>
+							            <span type="text" class="form-control">{{rp.content}}</span>
+							        </div>
+								</div>		
+							</div>
+							<div v-else>
+								<div style="text-align: center; margin-top: 2px;">
+									<span type="text" class="text-muted" style="text-align: center;">--评论区--</span>
+								</div>
+								<div style="float: left; margin-top: 8px;" class="text-muted">暂无评论</div>
+							</div>
+							
+
+						  </div>
+						</div>
+					</transition-group>
+
 					
-						
+					<!-- 渲染底部的导航栏 -->
+					<div>
+						<nav aria-label="Page navigation">
+						  <ul class="pagination" id="app-pagination2">
+						  	<!-- 展示当前页 -->
+							<li><span>第  <span style="color: #0A0A0A ">
+							{{pages.pageNum}}</span>  /  <span style="color: #F80606">{{pages.pages}}</span>  页</span>
+							</li>
+							<!-- 首页 -->
+						  	<li  id="nav_first"><a href="#" @click.prevent="topage(pages.firstPage)">首页</a></li>
+
+						  	<!-- 前一页 -->
+						    <li  id="nav_go_pre" :class="{hidden:!pages.hasPreviousPage}">
+						      <a href="#" aria-label="Previous" @click.prevent="topage(pages.pageNum-1)">
+						        <span aria-hidden="true">&laquo;</span>
+						      </a>
+						    </li>
+
+						    <!-- 翻页按钮渲染 -->
+						    <li id="nav_1" v-for="p in pages.navigatepageNums" :class="{active:p==pages.pageNum}">
+						    	<a href="#" @click.prevent="topage(p)">{{p}}</a>
+						    </li>
+
+						    <!-- 下一页 -->
+						    <li  id="nav_go_next" :class="{hidden:!pages.hasNextPage}">
+						      <a href="#" aria-label="Next" @click.prevent="topage(pages.pageNum+1)">
+						        <span aria-hidden="true">&raquo;</span>
+						      </a>
+						    </li>
+
+						    <!-- 尾页 -->
+						    <li  id="nav_last"><a href="#" @click.prevent="topage(pages.lastPage)">末页</a></li> 
+						  </ul>
+						</nav>
+					</div>
+				
+
 					
 				</div>
 
@@ -265,6 +349,6 @@
 
 
 
-	<script type="text/javascript" src="static/js/index.js"></script>
+	<script type="text/javascript" src="static/js/index-vue.js"></script>
 </body>
 </html>
