@@ -49,11 +49,15 @@ public class TestUserMapper {
 	public void testSelectByUserName(){
 		
 
-		List<User> users = mapper.selectByUserNameWithMsg("2014030804332");
+		List<User> users = mapper.selectByUserNameWithMsg("201403080433");
 		
 		for (User user : users) {
+			
+			System.out.println("name:"+user.getName());
+			System.out.println("desc:"+user.getDescription());
+			
 			List<Message> messages = user.getMessages();
-			System.out.println(user.getName()+"----->:");
+			
 			for (Message message : messages) {
 				System.out.println(message.getContent()+" -- "+message.getCreatetime());
 			}

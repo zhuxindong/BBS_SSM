@@ -344,9 +344,13 @@ public class UserController {
 		}
 		
 		
-		System.out.println("userinfo:"+user.toString());
+		user.setDescription(mydesc);
 		
-		return Msg.success();
+		userService.setUserDesc(user);
+		
+		request.getSession().setAttribute("user", user);
+		
+		return Msg.success().add("resinfo", "修改个性签名成功");
 		
 	}
 	

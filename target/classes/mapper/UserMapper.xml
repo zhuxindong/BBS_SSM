@@ -8,6 +8,7 @@
 		<result column="password" jdbcType="VARCHAR" property="password"/>
 		<result column="name" jdbcType="VARCHAR" property="name"/>
 		<result column="sex" jdbcType="VARCHAR" property="sex"/>
+		<result column="description" jdbcType="VARCHAR" property="description"/>
 		
 		<collection property="messages" ofType="com.zxd.bbs.pojo.Message">
 			<id column="id" property="id"/>

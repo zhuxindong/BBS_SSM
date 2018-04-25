@@ -45,6 +45,12 @@ function get_userinfo() {
 					$('#nav_name').text(userinfo.name);
 					$('#main_name').text(userinfo.name);
 
+					if (userinfo.description==null || userinfo.description=='' || userinfo.description.length==0 ) {
+						$('#my-desc').text('修改个性签名');
+					}else{
+						$('#my-desc').text(userinfo.description);
+					}
+					
 					
 				}
 				
@@ -365,5 +371,61 @@ var vue_msglist = new Vue({
 
 })
 
+
+
+
+
+
+//更新个性签名
+//1、鼠标移入签名区域，自动变成输入框，并且定义一个全局变量
+var mydesc;
+$('#my-desc').mouseover(function() {
+
+	mydesc = $('#my-desc').text();
+
+	$('#my-desc').css({
+		display: 'none'
+	});
+
+	$('#desc-input').css({
+		display: ''
+	});
+
+	$('#desc-input').val($('#my-desc').text());
+});
+//2、鼠标移出输入框区域，更新签名为输入框内的值，并发送ajax请求给服务器，异步更新
+$('#desc-input').mouseout(function() {
+	$('#my-desc').css({
+		display: ''
+	});
+
+	$('#desc-input').css({
+		display: 'none'
+	});
+
+	$('#my-desc').text($('#desc-input').val());
+
+
+	if (!(mydesc == $('#my-desc').text())) {
+
+		$.ajax({
+				url: 'desc/',
+				type: 'POST',
+				data: {
+						'mydesc':$('#desc-input').val(),
+						_method: 'PUT'
+					  },
+				success:function (result) {
+
+
+				}
+			});
+
+	}
+
+	
+
+
+})
 
 
