@@ -10,9 +10,24 @@ import com.zxd.bbs.pojo.Reply;
 
 public interface ReplyMapper {
 
-	
+	/**
+	 * 插入回复
+	 * @Title: insert  
+	 * @Description: TODO
+	 * @return int  
+	 * @param reply
+	 * @return
+	 */
 	int insert(Reply reply);
 	
+	/**
+	 * 根据id删除帖子
+	 * @Title: deleteById  
+	 * @Description: TODO
+	 * @return int  
+	 * @param id
+	 * @return
+	 */
 	int deleteById(Integer id);
 	
 }

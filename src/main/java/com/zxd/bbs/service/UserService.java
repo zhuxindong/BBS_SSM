@@ -54,5 +54,19 @@ public class UserService {
 	}
 	
 	
+	/**
+	 * 根据用户名更新用户的个性签名
+	 * @Title: setUserDesc  
+	 * @Description: TODO
+	 * @return void  
+	 * @param user
+	 */
+	public void setUserDesc(User user) {
+		
+		userMapper.updateByUserNameSelective(user);
+		
+	}
+	
+	
 
 }

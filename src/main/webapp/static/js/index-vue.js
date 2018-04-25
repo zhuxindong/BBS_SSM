@@ -195,6 +195,8 @@ $('#logbtn').click(function() {
 				data: $('#logform').serialize(),
 				success:function(result){
 
+					console.log(result);
+					
 					if (result.extend.resinfo=='用户名不存在') {
 						$('#logResult').html('<font color="red">用户名不存在</font>');
 					}else if(result.extend.resinfo=='密码错误'){
@@ -219,7 +221,7 @@ $('#logout').click(function() {
 				url: 'logout',
 				success:function(result){
 					console.log(result);
-					window.location.href="index-vue.html";
+					window.location.href="index.html";
 				}
 			});
 
@@ -277,7 +279,6 @@ $('#publishmessagebtn').click(function(event) {
 			console.log(typeof(vue_msglist.$data.pages.list));
 			console.log(vue_msglist.$data.pages.list);
 			vue_msglist.$data.pages.list.unshift(new_msg);
-
 
 
 

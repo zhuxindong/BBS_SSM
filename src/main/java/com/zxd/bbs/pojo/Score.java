@@ -1,7 +1,12 @@
 package com.zxd.bbs.pojo;
 
 
-
+/**
+ * @ClassName: Score
+ * @Description: TODO
+ * @author zhuxindong
+ * @date 2018年4月24日
+ */
 public class Score {
 	
 	

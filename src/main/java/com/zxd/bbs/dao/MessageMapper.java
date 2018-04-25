@@ -18,10 +18,34 @@ public interface MessageMapper {
 	 */
 	List<Message> selectAllWithUserAndReply();
 	
+	/**
+	 * 根据用户名查询帖子，同时查询帖子的主人和回复
+	 * @Title: selectByUserNameWithUserAndReply  
+	 * @Description: 根据用户名查询帖子，同时查询帖子的主人和回复
+	 * @return List<Message>  
+	 * @param username
+	 * @return
+	 */
 	List<Message> selectByUserNameWithUserAndReply(String username);
 	
+	/**
+	 * 根据id查询帖子，同时查询帖子的主人和回复
+	 * @Title: selectByIdWithUserAndReply  
+	 * @Description: 根据id查询帖子，同时查询帖子的主人和回复
+	 * @return List<Message>  
+	 * @param id
+	 * @return
+	 */
 	List<Message> selectByIdWithUserAndReply(int id);
 	
+	/**
+	 * 插入帖子
+	 * @Title: insert  
+	 * @Description: TODO
+	 * @return int  
+	 * @param message
+	 * @return
+	 */
 	int insert(Message message);
 	
 	/**

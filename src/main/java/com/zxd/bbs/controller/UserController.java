@@ -11,10 +11,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
+import com.fasterxml.jackson.annotation.JacksonInject.Value;
 import com.zxd.bbs.pojo.Msg;
 import com.zxd.bbs.pojo.User;
 import com.zxd.bbs.pojo.UserToken;
@@ -31,6 +32,10 @@ import com.zxd.bbs.util.MD5Util;
 public class UserController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	
+	private static final String TRUE = "true";
+	private static final String USER = "user";
+	
 
 	@Autowired
 	UserService userService;
@@ -92,7 +97,7 @@ public class UserController {
 		/**
 		 * 是否3天内自动登录
 		 */
-		if (userToken.getRememberMe()!=null && userToken.getRememberMe().equals("true")) {
+		if (userToken.getRememberMe()!=null && userToken.getRememberMe().equals(TRUE)) {
 			Cookie cookieUsername = new Cookie("username", userToken.getUsername());
 			Cookie cookiePssswordMD5 = new Cookie("passwordMD5", MD5Util.getMD5(userToken.getPassword()));
 			cookieUsername.setMaxAge(60*60*24*3);
@@ -124,8 +129,8 @@ public class UserController {
 		/**
 		 * 先看看session里面有没有user信息
 		 */
-		if (request.getSession().getAttribute("user") != null) {
-			user = (User) request.getSession().getAttribute("user");
+		if (request.getSession().getAttribute(USER) != null) {
+			user = (User) request.getSession().getAttribute(USER);
 			user.setPassword(null);
 			return Msg.success().add("userinfo", user);
 		}
@@ -207,7 +212,7 @@ public class UserController {
 		try {
 			user = userService.getByUserName(userToken.getUsername()).get(0);
 		} catch (Exception e) {
-			
+
 			return Msg.success().add("resinfo", "用户名不存在");
 		}
 		
@@ -215,6 +220,7 @@ public class UserController {
 		 * 用户名不存在，返回相应信息
 		 */
 		if (user == null) {
+
 			return Msg.success().add("resinfo", "用户名不存在");
 		}
 		
@@ -226,13 +232,14 @@ public class UserController {
 			/**
 			 * 加入到session
 			 */
+
 			request.getSession().setAttribute("user", user);
 			
 			
 			/**
 			 * 是否3天内自动登录
 			 */
-			if (userToken.getRememberMe()!=null && userToken.getRememberMe().equals("true")) {
+			if (userToken.getRememberMe()!=null && userToken.getRememberMe().equals(TRUE)) {
 				Cookie cookieUsername = new Cookie("username", userToken.getUsername());
 				Cookie cookiePssswordMD5 = new Cookie("passwordMD5", MD5Util.getMD5(userToken.getPassword()));
 				cookieUsername.setMaxAge(60*60*24*3);
@@ -306,6 +313,42 @@ public class UserController {
 		return Msg.success().add("resinfo", "退出成功");
 	}
 	
+	
+	/**
+	 * 修改用户的个性签名
+	 * @Title: setUserDesc  
+	 * @Description: TODO
+	 * @return Msg  
+	 * @return
+	 */
+	@RequestMapping(value = "/desc", method=RequestMethod.PUT)
+	@ResponseBody
+	public Msg setUserDesc(@RequestParam(value="mydesc") String mydesc,
+							HttpServletRequest request) {
+		
+		User user = null;
+		
+		try {
+			
+			user = (User) request.getSession().getAttribute("user");
+			
+		} catch (Exception e) {
+			logger.error("用户登录验证异常");
+			logger.error(e.toString());
+			return Msg.success().add("resinfo", "用户登录验证异常");
+		}
+		
+		if (user == null) {
+			logger.error("用户登录验证异常");
+			return Msg.success().add("resinfo", "用户登录验证异常");
+		}
+		
+		
+		System.out.println("userinfo:"+user.toString());
+		
+		return Msg.success();
+		
+	}
 	
 	
 	
