@@ -280,13 +280,18 @@ $('#publishmessagebtn').click(function(event) {
 				}
 			}
 
-			console.log(new_msg);
-			// 加入vue对象里面
-			console.log(typeof(vue_msglist.$data.pages.list));
-			console.log(vue_msglist.$data.pages.list);
+			// console.log(new_msg);
+			// console.log(typeof(vue_msglist.$data.pages.list));
+			// console.log(vue_msglist.$data.pages.list);
+
 			vue_msglist.$data.pages.list.unshift(new_msg);
 
-
+			vue_msglist.$message({
+				          showClose: true,
+				          message: '发表成功',
+				          type: 'success',
+				          duration:1000
+				        });
 
 		}
 	});
@@ -299,26 +304,7 @@ $('#publishmessagebtn').click(function(event) {
 
 
 
-//删除帖子
-function del_msg(id) {
 
-	var msg_id="#msg"+id;
-
-	
-	
-	$.ajax({
-		url: 'messages/'+id,
-		type: 'POST',
-		data: {_method: 'DELETE'},
-		success:function (result) {
-
-			//动画渲染
-			$(msg_id).hide(500);
-
-		}
-	});
-
-}
 
 
 
@@ -352,6 +338,7 @@ var vue_msglist = new Vue({
 		topage:function(pn){
 			to_page(pn);
 		},
+		//删除帖子
 		delmsg:function(mid){
 
 			$.ajax({
@@ -362,6 +349,12 @@ var vue_msglist = new Vue({
 
 					//动画渲染
 					$('#m_'+mid).hide(500);
+
+					vue_msglist.$message({
+				          showClose: true,
+				          message: '删除成功',
+				          duration:1000
+				        });
 
 				}
 			});
@@ -417,6 +410,12 @@ $('#desc-input').mouseout(function() {
 					  },
 				success:function (result) {
 
+						vue_msglist.$message({
+				          showClose: true,
+				          message: '修改签名成功',
+				          type: 'success',
+				          duration:1000
+				        });
 
 				}
 			});
