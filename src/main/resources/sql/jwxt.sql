@@ -29,7 +29,7 @@ CREATE TABLE `message` (
   `CONTENT` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `CREATETIME` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2549 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2549 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for reply
@@ -116,7 +116,7 @@ CREATE TABLE `sh_account` (
   `USERNAME` varchar(255) DEFAULT NULL,
   `BALANCE` int(11) DEFAULT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for sh_book
